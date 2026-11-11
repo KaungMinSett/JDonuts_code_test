@@ -75,6 +75,7 @@
   "welcomeTitle": "Welcome to the world of J’donuts",
   "welcomeExplore": "LET’S EXPLORE",
   "homeTitle": "Home",
+  "homeOffline": "You’re offline. Showing saved content.",
   "homeCatalogEmpty": "No products to show.",
   "catalogLoading": "Loading catalog…",
   "catalogLoadError": "Couldn’t load the catalog.",

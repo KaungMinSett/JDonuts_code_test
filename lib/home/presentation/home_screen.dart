@@ -7,6 +7,7 @@ import '../../core/widgets/catalog_load_error.dart';
 import '../../l10n/app_localizations.dart';
 import 'home_providers.dart';
 import 'widgets/home_catalog_section.dart';
+import 'widgets/home_offline_banner.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,7 +16,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.homeTitle)),
-      body: const _HomeCatalog(),
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          HomeOfflineBanner(),
+          Expanded(child: _HomeCatalog()),
+        ],
+      ),
     );
   }
 }
