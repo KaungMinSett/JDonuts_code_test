@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/app_localizations.dart';
-import '../widgets/app_legal_notice.dart';
 import '../widgets/auth_step_layout.dart';
+import '../widgets/date_of_birth_form.dart';
 
 class DateOfBirthScreen extends StatelessWidget {
   const DateOfBirthScreen({
@@ -21,19 +21,14 @@ class DateOfBirthScreen extends StatelessWidget {
     final strings = AppLocalizations.of(context)!;
 
     return AuthStepLayout(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AuthStepHeader(
-            title: strings.registrationDateOfBirthTitle,
-            progress: 1,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 32),
-            child: AppLegalNotice(),
-          ),
-        ],
+      child: DateOfBirthForm(
+        normalizedPhone: normalizedPhone,
+        firstName: firstName,
+        lastName: lastName,
+        header: AuthStepHeader(
+          title: strings.registrationDateOfBirthTitle,
+          progress: 1,
+        ),
       ),
     );
   }

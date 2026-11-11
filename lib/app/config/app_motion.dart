@@ -14,6 +14,34 @@ abstract final class AppMotion {
     curve: Curves.easeOut,
   );
   static const onboardingSlideDistance = 12.0;
+  static const welcomeEntranceDuration = Duration(milliseconds: 900);
+  static const welcomeFirstTileInterval = Interval(
+    0,
+    0.38,
+    curve: Curves.easeOutCubic,
+  );
+  static const welcomeSecondTileInterval = Interval(
+    0.1,
+    0.48,
+    curve: Curves.easeOutCubic,
+  );
+  static const welcomeThirdTileInterval = Interval(
+    0.2,
+    0.58,
+    curve: Curves.easeOutCubic,
+  );
+  static const welcomeFourthTileInterval = Interval(
+    0.3,
+    0.68,
+    curve: Curves.easeOutCubic,
+  );
+  static const welcomeTitleInterval = Interval(
+    0.68,
+    1,
+    curve: Curves.easeOutCubic,
+  );
+  static const welcomeTileSlideFraction = 0.22;
+  static const welcomeTitleSlideFraction = 0.18;
   static const doughnutProgressDuration = Duration(milliseconds: 350);
   static const doughnutProgressCurve = Curves.easeInOutCubic;
   static const otpErrorShakeDuration = Duration(milliseconds: 300);

@@ -54,5 +54,24 @@
   "registrationFirstNameRequired": "Enter your first name.",
   "registrationNameInvalidCharacters": "Use letters and spaces only.",
   "registrationNameTooLong": "Use 50 characters or fewer.",
-  "registrationDateOfBirthTitle": "What’s your date of birth?"
+  "registrationDateOfBirthTitle": "What’s your date of birth?",
+  "birthdayPickerTitle": "select your birthday",
+  "birthdayPickerDone": "Done",
+  "birthdayMonth": "Month",
+  "birthdayDay": "Day",
+  "birthdayYear": "Year",
+  "birthdayInvalidDate": "Select a valid date.",
+  "birthdayFutureDate": "Your birthday can’t be in the future.",
+  "birthdayUnderage": "You must be at least {age} years old to register.",
+  "@birthdayUnderage": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "registrationSaving": "Creating account…",
+  "registrationSaveFailed": "Couldn’t create your account. Tap Continue to try again.",
+  "welcomeTitle": "Welcome to the world of J’donuts",
+  "welcomeExplore": "LET’S EXPLORE"
 }

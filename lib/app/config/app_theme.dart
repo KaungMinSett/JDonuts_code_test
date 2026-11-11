@@ -12,8 +12,20 @@ abstract final class AppTheme {
   static const onboardingBackground = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFFFEFAFC), Color(0xFFF9EEF2)],
-    stops: [0, 0.52],
+    // Keep the artwork area pale before reaching the pink actions area.
+    colors: [Color(0xFFFEFAFC), Color(0xFFFEFAFC),
+      Color(0xFFF8E5EC)],
+    stops: [0, 0.33, 0.5],
+  );
+  static const welcomeBackground = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    // Welcome's taller artwork moves the pink transition farther down.
+    colors: [
+      Color(0xFFFEF9FB),
+      Color(0xFFFEF9FB),
+      Color(0xFFF6E1E7)],
+    stops: [0, 0.67, 0.74],
   );
   static const onboardingContentPadding = EdgeInsets.fromLTRB(32, 24, 32, 28);
 
