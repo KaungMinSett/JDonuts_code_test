@@ -65,11 +65,14 @@ final class OtpController extends Notifier<OtpState> {
     final lifecycle = ref;
     final repository = lifecycle.read(authRepositoryProvider);
     final previousStatus = state.status;
+    // Mark verification in flight before a second submission can start.
     state = state._copyWith(status: OtpStatus.verifying);
     try {
       final result = await repository.verifyOtp(code);
-      if (lifecycle.mounted) _applyResult(result);
+      // The user may leave the OTP screen while verification is pending.
+      if (lifecycle.mounted) _updateVerificationState(result);
     } finally {
+      // Restore input if verification exits without updating the status.
       if (lifecycle.mounted && state.status == OtpStatus.verifying) {
         state = state._copyWith(status: previousStatus);
       }
@@ -77,15 +80,16 @@ final class OtpController extends Notifier<OtpState> {
   }
 
   void resend() {
+    // A fresh countdown also clears the failed attempts.
     if (state.canResend) state = _startCountdown();
   }
 
-  void _applyResult(Result<void, AuthFailure> result) {
+  void _updateVerificationState(Result<void, OtpFailure> result) {
     switch (result) {
       case Success():
         _timer?.cancel();
         state = state._copyWith(status: OtpStatus.verified);
-      case Failure(error: AuthFailure.invalidOtp):
+      case Failure(error: OtpFailure.invalidCode):
         final wrongAttempts = state.wrongAttempts + 1;
         state = state._copyWith(
           wrongAttempts: wrongAttempts,
@@ -98,6 +102,7 @@ final class OtpController extends Notifier<OtpState> {
 
   OtpState _startCountdown() {
     _timer?.cancel();
+    // Use a deadline so delayed timer ticks do not extend the countdown.
     final deadline = _now().add(_resendDelay);
     _timer = Timer.periodic(
       const Duration(seconds: 1),
@@ -109,6 +114,7 @@ final class OtpController extends Notifier<OtpState> {
   void _updateCountdown(Timer timer, DateTime deadline) {
     final remaining = deadline.difference(_now()).inMicroseconds;
     const microsPerSecond = Duration.microsecondsPerSecond;
+    // Round up so the label reaches zero only once the deadline passes.
     final seconds = remaining <= 0
         ? 0
         : (remaining + microsPerSecond - 1) ~/ microsPerSecond;

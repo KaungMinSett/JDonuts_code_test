@@ -72,7 +72,7 @@ void main() {
       expect(repository.calls, 1);
       expect(container.read(otpControllerProvider).status, OtpStatus.verifying);
 
-      repository.result.complete(const Success<void, AuthFailure>(null));
+      repository.result.complete(const Success<void, OtpFailure>(null));
       time.flushMicrotasks();
       expect(container.read(otpControllerProvider).status, OtpStatus.verified);
     });
@@ -95,12 +95,12 @@ ProviderContainer _startOtp(
   return container;
 }
 
-final class _PendingAuthRepository implements AuthRepository {
-  final result = Completer<Result<void, AuthFailure>>();
+final class _PendingAuthRepository extends FakeAuthRepository {
+  final result = Completer<Result<void, OtpFailure>>();
   int calls = 0;
 
   @override
-  Future<Result<void, AuthFailure>> verifyOtp(String code) {
+  Future<Result<void, OtpFailure>> verifyOtp(String code) {
     calls++;
     return result.future;
   }
