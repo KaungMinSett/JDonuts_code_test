@@ -1,0 +1,21 @@
+{
+  "products": [
+    {
+      "id": "p_coconut",
+      "code": "JD022123",
+      "name": "Coconut Donut",
+      "description": "A soft donut topped with shredded coconut.",
+      "priceMmk": 3200,
+      "isNew": true,
+      "discountPercent": 10,
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
+    }
+  ],
+  "sections": [
+    {
+      "id": "seasonal",
+      "title": "Seasonal specials",
+      "productIds": ["p_coconut"]
+    }
+  ]
+}

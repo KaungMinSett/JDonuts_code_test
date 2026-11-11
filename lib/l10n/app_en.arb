@@ -73,5 +73,31 @@
   "registrationSaving": "Creating account…",
   "registrationSaveFailed": "Couldn’t create your account. Tap Continue to try again.",
   "welcomeTitle": "Welcome to the world of J’donuts",
-  "welcomeExplore": "LET’S EXPLORE"
+  "welcomeExplore": "LET’S EXPLORE",
+  "homeTitle": "Home",
+  "homeCatalogEmpty": "No products to show.",
+  "catalogLoading": "Loading catalog…",
+  "catalogLoadError": "Couldn’t load the catalog.",
+  "catalogRetry": "Try again",
+  "catalogImageUnavailable": "Image unavailable",
+  "productTitle": "Product Detail",
+  "productNotFound": "This product is unavailable.",
+  "productNewBadge": "New",
+  "productDiscount": "{percent}% off",
+  "@productDiscount": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "productPriceMmk": "{price} MMK",
+  "@productPriceMmk": {
+    "placeholders": {
+      "price": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  }
 }

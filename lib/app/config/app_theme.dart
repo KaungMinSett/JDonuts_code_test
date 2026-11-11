@@ -28,6 +28,7 @@ abstract final class AppTheme {
     stops: [0, 0.67, 0.74],
   );
   static const onboardingContentPadding = EdgeInsets.fromLTRB(32, 24, 32, 28);
+  static const catalogContentPadding = EdgeInsets.all(16);
 
   static const _brandCyan = Color(0xFF58CEEB);
   static const _brandPink = Color(0xFFF1589F);

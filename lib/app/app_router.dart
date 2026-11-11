@@ -8,6 +8,8 @@ import '../auth/presentation/screens/name_screen.dart';
 import '../auth/presentation/screens/otp_screen.dart';
 import '../auth/presentation/screens/phone_number_screen.dart';
 import '../auth/presentation/screens/welcome_screen.dart';
+import '../home/presentation/home_screen.dart';
+import '../product/presentation/product_detail_screen.dart';
 
 ({String normalizedPhone, bool isLogin})? _otpArguments(Object? extra) {
   if (extra case {
@@ -90,7 +92,13 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/welcome', builder: (_, _) => const WelcomeScreen()),
       GoRoute(
         path: '/home',
-        builder: (_, _) => const Scaffold(body: Placeholder(key: Key('home'))),
+        builder: (_, _) => const HomeScreen(key: Key('home')),
+      ),
+      GoRoute(
+        name: ProductDetailScreen.routeName,
+        path: '/product/:id',
+        builder: (_, state) =>
+            ProductDetailScreen(productId: state.pathParameters['id']!),
       ),
     ],
   );
