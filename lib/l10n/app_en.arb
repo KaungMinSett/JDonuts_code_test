@@ -48,5 +48,11 @@
   },
   "otpSigningIn": "Signing in…",
   "otpSessionSaveFailed": "Couldn’t sign in. Tap Continue to try again.",
-  "registrationNameTitle": "What’s your name?"
+  "registrationNameTitle": "What’s your name?",
+  "registrationFirstName": "First Name",
+  "registrationLastName": "Last Name",
+  "registrationFirstNameRequired": "Enter your first name.",
+  "registrationNameInvalidCharacters": "Use letters and spaces only.",
+  "registrationNameTooLong": "Use 50 characters or fewer.",
+  "registrationDateOfBirthTitle": "What’s your date of birth?"
 }

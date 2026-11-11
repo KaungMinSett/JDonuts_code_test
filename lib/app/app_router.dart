@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth/presentation/onboarding_screen.dart';
+import '../auth/presentation/screens/date_of_birth_screen.dart';
 import '../auth/presentation/screens/name_screen.dart';
 import '../auth/presentation/screens/otp_screen.dart';
 import '../auth/presentation/screens/phone_number_screen.dart';
@@ -19,6 +20,18 @@ import '../auth/presentation/screens/phone_number_screen.dart';
 
 String? _registrationPhone(Object? extra) {
   if (extra case {'normalizedPhone': final String phone}) return phone;
+  return null;
+}
+
+({String normalizedPhone, String firstName, String? lastName})?
+_registrationNameArguments(Object? extra) {
+  if (extra case {
+    'normalizedPhone': final String phone,
+    'firstName': final String firstName,
+    'lastName': final String? lastName,
+  }) {
+    return (normalizedPhone: phone, firstName: firstName, lastName: lastName);
+  }
   return null;
 }
 
@@ -55,6 +68,21 @@ final routerProvider = Provider<GoRouter>((ref) {
                 _registrationPhone(state.extra) == null ? '/phone' : null,
             builder: (_, state) =>
                 NameScreen(normalizedPhone: _registrationPhone(state.extra)!),
+          ),
+          GoRoute(
+            path: 'date-of-birth',
+            redirect: (_, state) =>
+                _registrationNameArguments(state.extra) == null
+                ? '/phone'
+                : null,
+            builder: (_, state) {
+              final draft = _registrationNameArguments(state.extra)!;
+              return DateOfBirthScreen(
+                normalizedPhone: draft.normalizedPhone,
+                firstName: draft.firstName,
+                lastName: draft.lastName,
+              );
+            },
           ),
         ],
       ),
