@@ -85,8 +85,8 @@ class _OtpVerificationFormState extends ConsumerState<OtpVerificationForm> {
     if (widget.isLogin) {
       await _saveLoginSession();
     } else {
-      // Keep this route and the verified code on the stack for Back from Name.
-      context.push<void>(
+      // Replace the verified challenge so Back from Name returns to Phone.
+      context.pushReplacement(
         '/phone/name',
         extra: {'normalizedPhone': widget.normalizedPhone},
       );
@@ -154,13 +154,13 @@ class _OtpVerificationFormState extends ConsumerState<OtpVerificationForm> {
           ),
           const SizedBox(height: 16),
           _OtpFeedback(status: status, sessionSaveFailed: _sessionSaveFailed),
-          if (status == OtpStatus.verified)
+          if (status == OtpStatus.verified && widget.isLogin)
             PrimaryButton(
               label: strings.authContinue,
               loadingLabel: _isSavingSession ? strings.otpSigningIn : null,
               onPressed: _continueAfterVerification,
             )
-          else
+          else if (status != OtpStatus.verified)
             OtpResend(onResend: _resendCode),
         ],
       ),

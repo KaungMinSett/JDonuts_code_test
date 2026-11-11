@@ -6,6 +6,8 @@ import '../../../app/config/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../domain/otp_validator.dart';
 
+const _otpMaskCharacter = '*';
+
 class OtpCodeInput extends StatelessWidget {
   const OtpCodeInput({
     required this.controller,
@@ -54,6 +56,8 @@ class OtpCodeInput extends StatelessWidget {
             autocorrect: false,
             enableSuggestions: false,
             showCursor: false,
+            obscureText: true,
+            obscuringCharacter: _otpMaskCharacter,
             style: const TextStyle(color: Colors.transparent),
             // The six boxes draw the focus outline. Override the shared field borders.
             decoration: InputDecoration(
@@ -107,7 +111,7 @@ class _OtpDigitRow extends StatelessWidget {
     return ListenableBuilder(
       listenable: Listenable.merge([controller, focusNode]),
       builder: (context, _) {
-        final code = controller.text;
+        final enteredDigitCount = controller.text.length;
         final hasFocus = enabled && focusNode.hasFocus;
         return Row(
           textDirection: TextDirection.ltr,
@@ -116,8 +120,8 @@ class _OtpDigitRow extends StatelessWidget {
             // The active box follows the next digit as users type or delete.
             return Expanded(
               child: _OtpDigitBox(
-                digit: index < code.length ? code[index] : '',
-                isActive: hasFocus && index == code.length,
+                isFilled: index < enteredDigitCount,
+                isActive: hasFocus && index == enteredDigitCount,
                 hasError: hasError,
               ),
             );
@@ -130,7 +134,7 @@ class _OtpDigitRow extends StatelessWidget {
 
 class _OtpDigitBox extends StatelessWidget {
   const _OtpDigitBox({
-    required this.digit,
+    required this.isFilled,
     required this.isActive,
     required this.hasError,
   });
@@ -138,7 +142,7 @@ class _OtpDigitBox extends StatelessWidget {
   static const _minHeight = 56.0;
   static const _radius = BorderRadius.all(Radius.circular(8));
 
-  final String digit;
+  final bool isFilled;
   final bool isActive;
   final bool hasError;
 
@@ -163,7 +167,10 @@ class _OtpDigitBox extends StatelessWidget {
         borderRadius: _radius,
         border: Border.all(color: borderColor),
       ),
-      child: Text(digit, style: theme.textTheme.headlineSmall),
+      child: Text(
+        isFilled ? _otpMaskCharacter : '',
+        style: theme.textTheme.headlineSmall,
+      ),
     );
   }
 }
