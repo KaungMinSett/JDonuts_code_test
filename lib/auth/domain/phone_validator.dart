@@ -1,4 +1,4 @@
-const _myanmarCountryCode = '+95';
+const myanmarCountryCode = '+95';
 
 final _phoneSeparators = RegExp(r'[\s-]');
 final _mobileNumber = RegExp(r'^9[0-9]{7,9}$');
@@ -14,5 +14,5 @@ String? normalizeMyanmarPhone(String input) {
   if (!_mobileNumber.hasMatch(number)) {
     return null;
   }
-  return '$_myanmarCountryCode$number';
+  return '$myanmarCountryCode$number';
 }

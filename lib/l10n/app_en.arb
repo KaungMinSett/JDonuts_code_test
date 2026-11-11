@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "onboardingHeadline": "Round food for every mood",
+  "onboardingGetStarted": "LET’S GET STARTED",
+  "onboardingAccountPrompt": "Already have an account?",
+  "onboardingLogin": "Log In",
+  "signInWithGoogle": "Sign in with Google",
+  "signInWithApple": "Sign in with Apple",
+  "signInWithFacebook": "Sign in with Facebook",
+  "onboardingLegalIntro": "By continuing, you acknowledge that you have read and agree to our ",
+  "onboardingTerms": "Terms of Use",
+  "onboardingLegalSeparator": " and ",
+  "onboardingPrivacy": "Privacy Policy",
+  "socialSignInUnavailable": "Social sign-in is tapped",
+  "legalContentUnavailable": "Legal content is tapped",
+  "doughnutProgress": "Progress",
+  "phoneNumberTitle": "Enter your phone number",
+  "loginPhoneNumberTitle": "Welcome back!\nlogin to your profile",
+  "phoneNumberHint": "Phone number",
+  "phoneNumberInvalid": "Enter 9 followed by 7 to 9 digits.",
+  "phoneNotRegistered": "This number isn’t registered.",
+  "phoneRegisterLink": "Register",
+  "phoneLookupUnavailable": "Couldn’t check this number. Try again.",
+  "phoneLookupLoading": "Checking phone number",
+  "authContinue": "CONTINUE",
+  "otpTitle": "Verify your number",
+  "otpSentTo": "We’ve sent a 6-digit OTP to {phone}",
+  "@otpSentTo": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  }
+}

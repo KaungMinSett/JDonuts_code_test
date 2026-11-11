@@ -2,18 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../auth/presentation/onboarding_screen.dart';
+import '../auth/presentation/screens/otp_screen.dart';
+import '../auth/presentation/screens/phone_number_screen.dart';
+
+({String normalizedPhone, bool isLogin})? _otpArguments(Object? extra) {
+  if (extra case {
+    'normalizedPhone': final String phone,
+    'isLogin': final bool isLogin,
+  }) {
+    return (normalizedPhone: phone, isLogin: isLogin);
+  }
+  return null;
+}
+
 final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
-        builder: (_, _) =>
-        const Scaffold(body: Placeholder(key: Key('onboarding'))),
+        builder: (_, _) => const OnboardingScreen(key: Key('onboarding')),
+      ),
+      GoRoute(
+        path: '/phone',
+        builder: (_, state) => PhoneNumberScreen(
+          isLogin: state.uri.queryParameters['mode'] == 'login',
+          initialPhone: state.extra is String ? state.extra! as String : '',
+        ),
+        routes: [
+          GoRoute(
+            path: 'otp',
+            // The phone stays in route arguments and is never included in the URL.
+            redirect: (_, state) =>
+                _otpArguments(state.extra) == null ? '/phone' : null,
+            builder: (_, state) {
+              final args = _otpArguments(state.extra)!;
+              return OtpScreen(
+                normalizedPhone: args.normalizedPhone,
+                isLogin: args.isLogin,
+              );
+            },
+          ),
+        ],
       ),
       GoRoute(
         path: '/home',
-        builder: (_, _) =>
-        const Scaffold(body: Placeholder(key: Key('home'))),
+        builder: (_, _) => const Scaffold(body: Placeholder(key: Key('home'))),
       ),
     ],
   );
