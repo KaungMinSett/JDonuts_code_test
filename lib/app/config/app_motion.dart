@@ -16,6 +16,12 @@ abstract final class AppMotion {
   static const onboardingSlideDistance = 12.0;
   static const doughnutProgressDuration = Duration(milliseconds: 350);
   static const doughnutProgressCurve = Curves.easeInOutCubic;
+  static const otpErrorShakeDuration = Duration(milliseconds: 300);
+  static const otpErrorShakeDistance = 8.0;
+  static const otpFeedbackDuration = Duration(milliseconds: 150);
+  static const otpFeedbackCurve = Curves.easeOut;
+  static const otpBoxFocusDuration = Duration(milliseconds: 150);
+  static const otpBoxFocusCurve = Curves.easeOut;
   static const buttonLoadingDuration = Duration(milliseconds: 180);
   static const buttonLoadingCurve = Curves.easeInOut;
   static const buttonPressDuration = Duration(milliseconds: 120);

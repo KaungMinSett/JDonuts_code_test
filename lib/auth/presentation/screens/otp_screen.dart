@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../l10n/app_localizations.dart';
 import '../widgets/app_legal_notice.dart';
 import '../widgets/auth_step_layout.dart';
+import '../widgets/otp_verification_form.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({
@@ -31,7 +32,15 @@ class OtpScreen extends StatelessWidget {
                 progress: isLogin ? 1 : 0.5,
               ),
               const SizedBox(height: 12),
-              Text(strings.otpSentTo(normalizedPhone)),
+              Text(
+                strings.otpSentTo(normalizedPhone),
+
+              ),
+              const SizedBox(height: 32),
+              OtpVerificationForm(
+                normalizedPhone: normalizedPhone,
+                isLogin: isLogin,
+              ),
             ],
           ),
           const Padding(

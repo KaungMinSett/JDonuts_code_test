@@ -58,8 +58,14 @@ class AuthStepHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             BackButton(
-              onPressed: () =>
-                  context.canPop() ? context.pop() : context.go('/'),
+              onPressed: () {
+                //  honors a step that is completing a session write.
+                if (context.canPop()) {
+                  Navigator.of(context).maybePop();
+                } else {
+                  context.go('/');
+                }
+              },
             ),
             DoughnutProgressIndicator(progress: progress),
           ],

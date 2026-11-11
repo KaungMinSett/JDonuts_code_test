@@ -24,6 +24,7 @@
   "phoneLookupLoading": "Checking phone number",
   "authContinue": "CONTINUE",
   "otpTitle": "Verify your number",
+  "otpInputLabel": "Six-digit verification code",
   "otpSentTo": "We’ve sent a 6-digit OTP to {phone}",
   "@otpSentTo": {
     "placeholders": {
@@ -31,5 +32,21 @@
         "type": "String"
       }
     }
-  }
+  },
+  "otpVerifying": "Verifying code…",
+  "otpInvalidCode": "That code is incorrect. Try again.",
+  "otpTooManyAttempts": "Too many incorrect codes. Use Resend to try again.",
+  "otpDidNotReceiveCode": "Didn’t receive the code?",
+  "otpResend": "Resend",
+  "otpResendIn": "Resend in {time} min",
+  "@otpResendIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "otpSigningIn": "Signing in…",
+  "otpSessionSaveFailed": "Couldn’t sign in. Tap Continue to try again.",
+  "registrationNameTitle": "What’s your name?"
 }

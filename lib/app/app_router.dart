@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../auth/presentation/onboarding_screen.dart';
+import '../auth/presentation/screens/name_screen.dart';
 import '../auth/presentation/screens/otp_screen.dart';
 import '../auth/presentation/screens/phone_number_screen.dart';
 
@@ -13,6 +14,11 @@ import '../auth/presentation/screens/phone_number_screen.dart';
   }) {
     return (normalizedPhone: phone, isLogin: isLogin);
   }
+  return null;
+}
+
+String? _registrationPhone(Object? extra) {
+  if (extra case {'normalizedPhone': final String phone}) return phone;
   return null;
 }
 
@@ -42,6 +48,13 @@ final routerProvider = Provider<GoRouter>((ref) {
                 isLogin: args.isLogin,
               );
             },
+          ),
+          GoRoute(
+            path: 'name',
+            redirect: (_, state) =>
+                _registrationPhone(state.extra) == null ? '/phone' : null,
+            builder: (_, state) =>
+                NameScreen(normalizedPhone: _registrationPhone(state.extra)!),
           ),
         ],
       ),

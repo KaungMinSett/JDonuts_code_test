@@ -23,7 +23,7 @@ abstract final class AppTheme {
   static const _buttonHeight = 54.0;
   static const _fieldPadding = EdgeInsets.symmetric(
     horizontal: 16,
-    vertical: 14,
+    vertical: 17,
   );
 
   static const _fieldBorder = OutlineInputBorder(

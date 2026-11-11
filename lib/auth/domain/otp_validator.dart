@@ -1,6 +1,6 @@
-const _otpLength = 6;
+const otpCodeLength = 6;
 final _digitsOnly = RegExp(r'^[0-9]+$');
 
 bool isValidOtpFormat(String input) {
-  return input.length == _otpLength && _digitsOnly.hasMatch(input);
+  return input.length == otpCodeLength && _digitsOnly.hasMatch(input);
 }
