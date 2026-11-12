@@ -23,6 +23,18 @@ CatalogSeed parseCatalogSeed(String source) {
   throw const FormatException('Catalog seed needs products and sections.');
 }
 
+({String productId, int discountPercent}) parseCatalogDiscountUpdate(
+  String source,
+) {
+  if (jsonDecode(source) case {
+    'productId': final String productId,
+    'discountPercent': final int discountPercent,
+  } when _hasText(productId) && _isValidDiscount(discountPercent)) {
+    return (productId: productId, discountPercent: discountPercent);
+  }
+  throw const FormatException('Invalid catalog discount update.');
+}
+
 CatalogSeed _parseRows(List<Object?> products, List<Object?> sections) {
   // Reject broken links and duplicate IDs before any database writes.
   final productRows = products.map(_parseProduct).toList();

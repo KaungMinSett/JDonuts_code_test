@@ -14,5 +14,7 @@ final catalogStoreProvider = Provider<CatalogStore>((ref) {
   return CatalogStore(
     database,
     loadSeed: () => rootBundle.loadString('assets/data/catalog_seed.json'),
+    loadRefresh: () =>
+        rootBundle.loadString('assets/data/catalog_refresh.json'),
   );
 });

@@ -6,4 +6,6 @@ typedef HomeSection = ({String id, String title, List<Product> products});
 
 abstract interface class HomeRepository {
   Stream<Result<List<HomeSection>, CatalogFailure>> watchSections();
+
+  Future<Result<void, CatalogFailure>> refreshCatalog();
 }

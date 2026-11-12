@@ -14,6 +14,9 @@ final class DriftHomeRepository implements HomeRepository {
   final CatalogStore _store;
 
   @override
+  Future<Result<void, CatalogFailure>> refreshCatalog() => _store.refresh();
+
+  @override
   Stream<Result<List<HomeSection>, CatalogFailure>> watchSections() {
     return _store.watch((database) {
       final sections = database.homeSections;

@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/images/
     - assets/data/catalog_seed.json
+    - assets/data/catalog_refresh.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

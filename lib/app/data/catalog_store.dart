@@ -1,16 +1,24 @@
 import 'dart:developer' as developer;
 
+import 'package:drift/drift.dart';
+
 import '../../core/domain/catalog_failure.dart';
 import '../../core/domain/result.dart';
 import 'catalog_database.dart';
-import 'catalog_seed.dart';
+import 'catalog_fixtures.dart';
 
 final class CatalogStore {
-  CatalogStore(this._database, {required this._loadSeed});
+  CatalogStore(
+    this._database, {
+    required this._loadSeed,
+    required this._loadRefresh,
+  });
 
   static const _seedId = 'initial_catalog';
   final CatalogDatabase _database;
   final Future<String> Function() _loadSeed;
+  final Future<String> Function() _loadRefresh;
+  Future<Result<void, CatalogFailure>>? _refreshInProgress;
 
   Stream<Result<T, CatalogFailure>> watch<T>(
     Stream<T> Function(CatalogDatabase database) query,
@@ -29,6 +37,39 @@ final class CatalogStore {
         stackTrace: stackTrace,
       );
       yield Failure(CatalogFailure.unavailable);
+    }
+  }
+
+  Future<Result<void, CatalogFailure>> refresh() {
+    // Reconnect and pull-to-refresh can share the same pending write.
+    return _refreshInProgress ??= _applyRefresh().whenComplete(() {
+      _refreshInProgress = null;
+    });
+  }
+
+  Future<Result<void, CatalogFailure>> _applyRefresh() async {
+    try {
+      final update = parseCatalogDiscountUpdate(await _loadRefresh());
+      await _ensureSeeded();
+
+      // A single SQLite update changes only this product's public discount.
+      final product = _database.update(_database.products)
+        ..where((row) => row.id.equals(update.productId));
+      final updatedRows = await product.write(
+        ProductsCompanion(discountPercent: Value(update.discountPercent)),
+      );
+      if (updatedRows == 0) {
+        throw FormatException('Unknown catalog product: ${update.productId}');
+      }
+      return const Success(null);
+    } catch (error, stackTrace) {
+      developer.log(
+        'Could not refresh the local catalog.',
+        name: 'CatalogStore',
+        error: error,
+        stackTrace: stackTrace,
+      );
+      return const Failure(CatalogFailure.unavailable);
     }
   }
 

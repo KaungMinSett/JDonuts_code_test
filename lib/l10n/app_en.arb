@@ -79,6 +79,8 @@
   "homeCatalogEmpty": "No products to show.",
   "catalogLoading": "Loading catalog…",
   "catalogLoadError": "Couldn’t load the catalog.",
+  "catalogRefreshOffline": "You’re offline. Connect to refresh the catalog.",
+  "catalogRefreshFailed": "Couldn’t refresh the catalog. Try again.",
   "catalogRetry": "Try again",
   "catalogImageUnavailable": "Image unavailable",
   "productTitle": "Product Detail",
