@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:donuts_code_test/app/data/catalog_database.dart';
 import 'package:donuts_code_test/app/data/catalog_store.dart';
 import 'package:donuts_code_test/core/domain/catalog_failure.dart';
+import 'package:donuts_code_test/core/domain/member_profile.dart';
 import 'package:donuts_code_test/core/domain/result.dart';
 import 'package:donuts_code_test/home/data/drift_home_repository.dart';
 import 'package:donuts_code_test/home/domain/home_repository.dart';
@@ -51,7 +52,12 @@ void main() {
         home.watchSections().map((result) {
           final sections =
               (result as Success<List<HomeSection>, CatalogFailure>).value;
-          return sections.single.products.single.discountPercent;
+          final seasonal = sections.singleWhere(
+            (section) => section.id == 'seasonal',
+          );
+          return seasonal.products
+              .singleWhere((product) => product.id == 'p_coconut')
+              .discountPercent;
         }),
       );
       addTearDown(discounts.cancel);
@@ -76,5 +82,59 @@ void main() {
 
     expect(await home.refreshCatalog(), isA<Failure<void, CatalogFailure>>());
     expect(await readCoconutDiscount(), 15);
+  });
+
+  test('The bundled catalog seeds every Home section in order', () async {
+    final member =
+        (await home.watchMember().first
+                as Success<MemberProfile?, CatalogFailure>)
+            .value!;
+    final banners =
+        (await home.watchBanners().first
+                as Success<List<HomeBanner>, CatalogFailure>)
+            .value;
+    final sections =
+        (await home.watchSections().first
+                as Success<List<HomeSection>, CatalogFailure>)
+            .value;
+    final shops =
+        (await home.watchShops().first
+                as Success<List<NearbyShop>, CatalogFailure>)
+            .value;
+
+    expect(member.tier, 'Silver');
+    expect(member.nextTierPoints - member.points, 500);
+    expect(banners.map((banner) => banner.id), [
+      'seasonal_favorites',
+      'share_a_box',
+    ]);
+    expect(banners.map((banner) => (banner.imageAsset, banner.badgeLabel)), [
+      ('assets/images/donutshop_1.jpg', 'New shop'),
+      ('assets/images/donutshop_2.jpg', '50% off'),
+    ]);
+    expect(sections.map((section) => section.id), [
+      'seasonal',
+      'popular',
+      'order_again',
+    ]);
+    final seasonal = sections.first;
+    expect(seasonal.products.map((product) => (product.id, product.discountPercent)), [
+      ('p_strawberry', 30),
+      ('p_coconut', 10),
+    ]);
+    expect(shops.map((shop) => shop.id), [
+      'junction_city',
+      'myanmar_plaza',
+      'hledan',
+      'junction_square',
+    ]);
+
+    // Each linked product opens the same domain record in Product Detail.
+    for (final section in sections) {
+      for (final product in section.products) {
+        final detail = await products.watchProduct(product.id).first;
+        expect((detail as Success<Product?, CatalogFailure>).value, product);
+      }
+    }
   });
 }

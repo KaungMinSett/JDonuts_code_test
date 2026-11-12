@@ -10,13 +10,113 @@
       "discountPercent": 10,
       "imageAsset": "assets/images/onboarding_hero.jpeg",
       "imageUrl": "https://images.unsplash.com/photo-1640115954466-595cc0c9b0bc?fit=crop&w=900&q=80&fm=jpg"
+    },
+    {
+      "id": "p_strawberry",
+      "code": "JD022124",
+      "name": "Strawberry Sprinkle",
+      "description": "A fluffy donut with strawberry glaze and colorful sprinkles.",
+      "priceMmk": 3500,
+      "isNew": true,
+      "discountPercent": 30,
+      "imageAsset": "assets/images/donutshop_2.jpg"
+    },
+    {
+      "id": "p_chocolate",
+      "code": "JD022125",
+      "name": "Chocolate Glazed",
+      "description": "A soft donut dipped in chocolate glaze.",
+      "priceMmk": 3400,
+      "isNew": false,
+      "discountPercent": 10,
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
+    },
+    {
+      "id": "p_classic",
+      "code": "JD022126",
+      "name": "Classic Glazed",
+      "description": "A light yeast donut with a thin sugar glaze.",
+      "priceMmk": 2800,
+      "isNew": false,
+      "discountPercent": null,
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
+    },
+    {
+      "id": "p_cookies",
+      "code": "JD022127",
+      "name": "Cookies and Cream",
+      "description": "A cream-topped donut finished with chocolate cookie crumbs.",
+      "priceMmk": 3800,
+      "isNew": false,
+      "discountPercent": null,
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
     }
   ],
   "sections": [
     {
       "id": "seasonal",
       "title": "Seasonal specials",
-      "productIds": ["p_coconut"]
+      "productIds": ["p_strawberry", "p_coconut"]
+    },
+    {
+      "id": "popular",
+      "title": "Popular",
+      "productIds": ["p_chocolate", "p_classic", "p_cookies"]
+    },
+    {
+      "id": "order_again",
+      "title": "Order again",
+      "productIds": ["p_classic", "p_coconut"]
+    }
+  ],
+  "member": {
+    "id": "demo_member",
+    "name": "Thiri",
+    "imageAsset": "assets/images/onboarding_hero.jpeg",
+    "tier": "Silver",
+    "points": 680000,
+    "nextTier": "Gold",
+    "nextTierPoints": 680500,
+    "notificationCount": 3
+  },
+  "banners": [
+    {
+      "id": "seasonal_favorites",
+      "title": "Donut shop counter",
+      "badgeLabel": "New shop",
+      "imageAsset": "assets/images/donutshop_1.jpg"
+    },
+    {
+      "id": "share_a_box",
+      "title": "Assorted decorated donuts",
+      "badgeLabel": "50% off",
+      "imageAsset": "assets/images/donutshop_2.jpg"
+    }
+  ],
+  "shops": [
+    {
+      "id": "junction_city",
+      "name": "J’Donuts Junction City",
+      "location": "Pabedan, Yangon",
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
+    },
+    {
+      "id": "myanmar_plaza",
+      "name": "J’Donuts Myanmar Plaza",
+      "location": "Bahan, Yangon",
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
+    },
+    {
+      "id": "hledan",
+      "name": "J’Donuts Hledan",
+      "location": "Kamayut, Yangon",
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
+    },
+    {
+      "id": "junction_square",
+      "name": "J’Donuts Junction Square",
+      "location": "Kamayut, Yangon",
+      "imageAsset": "assets/images/onboarding_hero.jpeg"
     }
   ]
 }

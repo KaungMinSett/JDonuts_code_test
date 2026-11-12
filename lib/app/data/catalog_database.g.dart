@@ -1111,6 +1111,1249 @@ class HomeSectionProductsCompanion extends UpdateCompanion<HomeSectionProduct> {
   }
 }
 
+class $MembersTable extends Members with TableInfo<$MembersTable, MemberRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MembersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _imageAssetMeta = const VerificationMeta(
+    'imageAsset',
+  );
+  @override
+  late final GeneratedColumn<String> imageAsset = GeneratedColumn<String>(
+    'image_asset',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tierMeta = const VerificationMeta('tier');
+  @override
+  late final GeneratedColumn<String> tier = GeneratedColumn<String>(
+    'tier',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pointsMeta = const VerificationMeta('points');
+  @override
+  late final GeneratedColumn<int> points = GeneratedColumn<int>(
+    'points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nextTierMeta = const VerificationMeta(
+    'nextTier',
+  );
+  @override
+  late final GeneratedColumn<String> nextTier = GeneratedColumn<String>(
+    'next_tier',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nextTierPointsMeta = const VerificationMeta(
+    'nextTierPoints',
+  );
+  @override
+  late final GeneratedColumn<int> nextTierPoints = GeneratedColumn<int>(
+    'next_tier_points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _notificationCountMeta = const VerificationMeta(
+    'notificationCount',
+  );
+  @override
+  late final GeneratedColumn<int> notificationCount = GeneratedColumn<int>(
+    'notification_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    imageAsset,
+    tier,
+    points,
+    nextTier,
+    nextTierPoints,
+    notificationCount,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'members';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MemberRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('image_asset')) {
+      context.handle(
+        _imageAssetMeta,
+        imageAsset.isAcceptableOrUnknown(data['image_asset']!, _imageAssetMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_imageAssetMeta);
+    }
+    if (data.containsKey('tier')) {
+      context.handle(
+        _tierMeta,
+        tier.isAcceptableOrUnknown(data['tier']!, _tierMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tierMeta);
+    }
+    if (data.containsKey('points')) {
+      context.handle(
+        _pointsMeta,
+        points.isAcceptableOrUnknown(data['points']!, _pointsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pointsMeta);
+    }
+    if (data.containsKey('next_tier')) {
+      context.handle(
+        _nextTierMeta,
+        nextTier.isAcceptableOrUnknown(data['next_tier']!, _nextTierMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nextTierMeta);
+    }
+    if (data.containsKey('next_tier_points')) {
+      context.handle(
+        _nextTierPointsMeta,
+        nextTierPoints.isAcceptableOrUnknown(
+          data['next_tier_points']!,
+          _nextTierPointsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_nextTierPointsMeta);
+    }
+    if (data.containsKey('notification_count')) {
+      context.handle(
+        _notificationCountMeta,
+        notificationCount.isAcceptableOrUnknown(
+          data['notification_count']!,
+          _notificationCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_notificationCountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MemberRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MemberRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      imageAsset: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_asset'],
+      )!,
+      tier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tier'],
+      )!,
+      points: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}points'],
+      )!,
+      nextTier: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}next_tier'],
+      )!,
+      nextTierPoints: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}next_tier_points'],
+      )!,
+      notificationCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}notification_count'],
+      )!,
+    );
+  }
+
+  @override
+  $MembersTable createAlias(String alias) {
+    return $MembersTable(attachedDatabase, alias);
+  }
+}
+
+class MemberRow extends DataClass implements Insertable<MemberRow> {
+  final String id;
+  final String name;
+  final String imageAsset;
+  final String tier;
+  final int points;
+  final String nextTier;
+  final int nextTierPoints;
+  final int notificationCount;
+  const MemberRow({
+    required this.id,
+    required this.name,
+    required this.imageAsset,
+    required this.tier,
+    required this.points,
+    required this.nextTier,
+    required this.nextTierPoints,
+    required this.notificationCount,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['image_asset'] = Variable<String>(imageAsset);
+    map['tier'] = Variable<String>(tier);
+    map['points'] = Variable<int>(points);
+    map['next_tier'] = Variable<String>(nextTier);
+    map['next_tier_points'] = Variable<int>(nextTierPoints);
+    map['notification_count'] = Variable<int>(notificationCount);
+    return map;
+  }
+
+  MembersCompanion toCompanion(bool nullToAbsent) {
+    return MembersCompanion(
+      id: Value(id),
+      name: Value(name),
+      imageAsset: Value(imageAsset),
+      tier: Value(tier),
+      points: Value(points),
+      nextTier: Value(nextTier),
+      nextTierPoints: Value(nextTierPoints),
+      notificationCount: Value(notificationCount),
+    );
+  }
+
+  factory MemberRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MemberRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      imageAsset: serializer.fromJson<String>(json['imageAsset']),
+      tier: serializer.fromJson<String>(json['tier']),
+      points: serializer.fromJson<int>(json['points']),
+      nextTier: serializer.fromJson<String>(json['nextTier']),
+      nextTierPoints: serializer.fromJson<int>(json['nextTierPoints']),
+      notificationCount: serializer.fromJson<int>(json['notificationCount']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'imageAsset': serializer.toJson<String>(imageAsset),
+      'tier': serializer.toJson<String>(tier),
+      'points': serializer.toJson<int>(points),
+      'nextTier': serializer.toJson<String>(nextTier),
+      'nextTierPoints': serializer.toJson<int>(nextTierPoints),
+      'notificationCount': serializer.toJson<int>(notificationCount),
+    };
+  }
+
+  MemberRow copyWith({
+    String? id,
+    String? name,
+    String? imageAsset,
+    String? tier,
+    int? points,
+    String? nextTier,
+    int? nextTierPoints,
+    int? notificationCount,
+  }) => MemberRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    imageAsset: imageAsset ?? this.imageAsset,
+    tier: tier ?? this.tier,
+    points: points ?? this.points,
+    nextTier: nextTier ?? this.nextTier,
+    nextTierPoints: nextTierPoints ?? this.nextTierPoints,
+    notificationCount: notificationCount ?? this.notificationCount,
+  );
+  MemberRow copyWithCompanion(MembersCompanion data) {
+    return MemberRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      imageAsset: data.imageAsset.present
+          ? data.imageAsset.value
+          : this.imageAsset,
+      tier: data.tier.present ? data.tier.value : this.tier,
+      points: data.points.present ? data.points.value : this.points,
+      nextTier: data.nextTier.present ? data.nextTier.value : this.nextTier,
+      nextTierPoints: data.nextTierPoints.present
+          ? data.nextTierPoints.value
+          : this.nextTierPoints,
+      notificationCount: data.notificationCount.present
+          ? data.notificationCount.value
+          : this.notificationCount,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MemberRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('tier: $tier, ')
+          ..write('points: $points, ')
+          ..write('nextTier: $nextTier, ')
+          ..write('nextTierPoints: $nextTierPoints, ')
+          ..write('notificationCount: $notificationCount')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    name,
+    imageAsset,
+    tier,
+    points,
+    nextTier,
+    nextTierPoints,
+    notificationCount,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MemberRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.imageAsset == this.imageAsset &&
+          other.tier == this.tier &&
+          other.points == this.points &&
+          other.nextTier == this.nextTier &&
+          other.nextTierPoints == this.nextTierPoints &&
+          other.notificationCount == this.notificationCount);
+}
+
+class MembersCompanion extends UpdateCompanion<MemberRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> imageAsset;
+  final Value<String> tier;
+  final Value<int> points;
+  final Value<String> nextTier;
+  final Value<int> nextTierPoints;
+  final Value<int> notificationCount;
+  final Value<int> rowid;
+  const MembersCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.imageAsset = const Value.absent(),
+    this.tier = const Value.absent(),
+    this.points = const Value.absent(),
+    this.nextTier = const Value.absent(),
+    this.nextTierPoints = const Value.absent(),
+    this.notificationCount = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MembersCompanion.insert({
+    required String id,
+    required String name,
+    required String imageAsset,
+    required String tier,
+    required int points,
+    required String nextTier,
+    required int nextTierPoints,
+    required int notificationCount,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       imageAsset = Value(imageAsset),
+       tier = Value(tier),
+       points = Value(points),
+       nextTier = Value(nextTier),
+       nextTierPoints = Value(nextTierPoints),
+       notificationCount = Value(notificationCount);
+  static Insertable<MemberRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? imageAsset,
+    Expression<String>? tier,
+    Expression<int>? points,
+    Expression<String>? nextTier,
+    Expression<int>? nextTierPoints,
+    Expression<int>? notificationCount,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (imageAsset != null) 'image_asset': imageAsset,
+      if (tier != null) 'tier': tier,
+      if (points != null) 'points': points,
+      if (nextTier != null) 'next_tier': nextTier,
+      if (nextTierPoints != null) 'next_tier_points': nextTierPoints,
+      if (notificationCount != null) 'notification_count': notificationCount,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MembersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? imageAsset,
+    Value<String>? tier,
+    Value<int>? points,
+    Value<String>? nextTier,
+    Value<int>? nextTierPoints,
+    Value<int>? notificationCount,
+    Value<int>? rowid,
+  }) {
+    return MembersCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      imageAsset: imageAsset ?? this.imageAsset,
+      tier: tier ?? this.tier,
+      points: points ?? this.points,
+      nextTier: nextTier ?? this.nextTier,
+      nextTierPoints: nextTierPoints ?? this.nextTierPoints,
+      notificationCount: notificationCount ?? this.notificationCount,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (imageAsset.present) {
+      map['image_asset'] = Variable<String>(imageAsset.value);
+    }
+    if (tier.present) {
+      map['tier'] = Variable<String>(tier.value);
+    }
+    if (points.present) {
+      map['points'] = Variable<int>(points.value);
+    }
+    if (nextTier.present) {
+      map['next_tier'] = Variable<String>(nextTier.value);
+    }
+    if (nextTierPoints.present) {
+      map['next_tier_points'] = Variable<int>(nextTierPoints.value);
+    }
+    if (notificationCount.present) {
+      map['notification_count'] = Variable<int>(notificationCount.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MembersCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('tier: $tier, ')
+          ..write('points: $points, ')
+          ..write('nextTier: $nextTier, ')
+          ..write('nextTierPoints: $nextTierPoints, ')
+          ..write('notificationCount: $notificationCount, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $HomeBannersTable extends HomeBanners
+    with TableInfo<$HomeBannersTable, HomeBannerRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HomeBannersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _badgeLabelMeta = const VerificationMeta(
+    'badgeLabel',
+  );
+  @override
+  late final GeneratedColumn<String> badgeLabel = GeneratedColumn<String>(
+    'badge_label',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _imageAssetMeta = const VerificationMeta(
+    'imageAsset',
+  );
+  @override
+  late final GeneratedColumn<String> imageAsset = GeneratedColumn<String>(
+    'image_asset',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    badgeLabel,
+    imageAsset,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'home_banners';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<HomeBannerRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('badge_label')) {
+      context.handle(
+        _badgeLabelMeta,
+        badgeLabel.isAcceptableOrUnknown(data['badge_label']!, _badgeLabelMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_badgeLabelMeta);
+    }
+    if (data.containsKey('image_asset')) {
+      context.handle(
+        _imageAssetMeta,
+        imageAsset.isAcceptableOrUnknown(data['image_asset']!, _imageAssetMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_imageAssetMeta);
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HomeBannerRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HomeBannerRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      badgeLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}badge_label'],
+      )!,
+      imageAsset: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_asset'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $HomeBannersTable createAlias(String alias) {
+    return $HomeBannersTable(attachedDatabase, alias);
+  }
+}
+
+class HomeBannerRow extends DataClass implements Insertable<HomeBannerRow> {
+  final String id;
+  final String title;
+  final String badgeLabel;
+  final String imageAsset;
+  final int position;
+  const HomeBannerRow({
+    required this.id,
+    required this.title,
+    required this.badgeLabel,
+    required this.imageAsset,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    map['badge_label'] = Variable<String>(badgeLabel);
+    map['image_asset'] = Variable<String>(imageAsset);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  HomeBannersCompanion toCompanion(bool nullToAbsent) {
+    return HomeBannersCompanion(
+      id: Value(id),
+      title: Value(title),
+      badgeLabel: Value(badgeLabel),
+      imageAsset: Value(imageAsset),
+      position: Value(position),
+    );
+  }
+
+  factory HomeBannerRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HomeBannerRow(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      badgeLabel: serializer.fromJson<String>(json['badgeLabel']),
+      imageAsset: serializer.fromJson<String>(json['imageAsset']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'badgeLabel': serializer.toJson<String>(badgeLabel),
+      'imageAsset': serializer.toJson<String>(imageAsset),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  HomeBannerRow copyWith({
+    String? id,
+    String? title,
+    String? badgeLabel,
+    String? imageAsset,
+    int? position,
+  }) => HomeBannerRow(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    badgeLabel: badgeLabel ?? this.badgeLabel,
+    imageAsset: imageAsset ?? this.imageAsset,
+    position: position ?? this.position,
+  );
+  HomeBannerRow copyWithCompanion(HomeBannersCompanion data) {
+    return HomeBannerRow(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      badgeLabel: data.badgeLabel.present
+          ? data.badgeLabel.value
+          : this.badgeLabel,
+      imageAsset: data.imageAsset.present
+          ? data.imageAsset.value
+          : this.imageAsset,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HomeBannerRow(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('badgeLabel: $badgeLabel, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, title, badgeLabel, imageAsset, position);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HomeBannerRow &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.badgeLabel == this.badgeLabel &&
+          other.imageAsset == this.imageAsset &&
+          other.position == this.position);
+}
+
+class HomeBannersCompanion extends UpdateCompanion<HomeBannerRow> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<String> badgeLabel;
+  final Value<String> imageAsset;
+  final Value<int> position;
+  final Value<int> rowid;
+  const HomeBannersCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.badgeLabel = const Value.absent(),
+    this.imageAsset = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  HomeBannersCompanion.insert({
+    required String id,
+    required String title,
+    required String badgeLabel,
+    required String imageAsset,
+    required int position,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       title = Value(title),
+       badgeLabel = Value(badgeLabel),
+       imageAsset = Value(imageAsset),
+       position = Value(position);
+  static Insertable<HomeBannerRow> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<String>? badgeLabel,
+    Expression<String>? imageAsset,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (badgeLabel != null) 'badge_label': badgeLabel,
+      if (imageAsset != null) 'image_asset': imageAsset,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  HomeBannersCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<String>? badgeLabel,
+    Value<String>? imageAsset,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return HomeBannersCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      badgeLabel: badgeLabel ?? this.badgeLabel,
+      imageAsset: imageAsset ?? this.imageAsset,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (badgeLabel.present) {
+      map['badge_label'] = Variable<String>(badgeLabel.value);
+    }
+    if (imageAsset.present) {
+      map['image_asset'] = Variable<String>(imageAsset.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HomeBannersCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('badgeLabel: $badgeLabel, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $NearbyShopsTable extends NearbyShops
+    with TableInfo<$NearbyShopsTable, NearbyShopRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $NearbyShopsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _locationMeta = const VerificationMeta(
+    'location',
+  );
+  @override
+  late final GeneratedColumn<String> location = GeneratedColumn<String>(
+    'location',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _imageAssetMeta = const VerificationMeta(
+    'imageAsset',
+  );
+  @override
+  late final GeneratedColumn<String> imageAsset = GeneratedColumn<String>(
+    'image_asset',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    name,
+    location,
+    imageAsset,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'nearby_shops';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<NearbyShopRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('location')) {
+      context.handle(
+        _locationMeta,
+        location.isAcceptableOrUnknown(data['location']!, _locationMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_locationMeta);
+    }
+    if (data.containsKey('image_asset')) {
+      context.handle(
+        _imageAssetMeta,
+        imageAsset.isAcceptableOrUnknown(data['image_asset']!, _imageAssetMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_imageAssetMeta);
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  NearbyShopRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return NearbyShopRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      location: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}location'],
+      )!,
+      imageAsset: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_asset'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $NearbyShopsTable createAlias(String alias) {
+    return $NearbyShopsTable(attachedDatabase, alias);
+  }
+}
+
+class NearbyShopRow extends DataClass implements Insertable<NearbyShopRow> {
+  final String id;
+  final String name;
+  final String location;
+  final String imageAsset;
+  final int position;
+  const NearbyShopRow({
+    required this.id,
+    required this.name,
+    required this.location,
+    required this.imageAsset,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    map['location'] = Variable<String>(location);
+    map['image_asset'] = Variable<String>(imageAsset);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  NearbyShopsCompanion toCompanion(bool nullToAbsent) {
+    return NearbyShopsCompanion(
+      id: Value(id),
+      name: Value(name),
+      location: Value(location),
+      imageAsset: Value(imageAsset),
+      position: Value(position),
+    );
+  }
+
+  factory NearbyShopRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return NearbyShopRow(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      location: serializer.fromJson<String>(json['location']),
+      imageAsset: serializer.fromJson<String>(json['imageAsset']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'location': serializer.toJson<String>(location),
+      'imageAsset': serializer.toJson<String>(imageAsset),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  NearbyShopRow copyWith({
+    String? id,
+    String? name,
+    String? location,
+    String? imageAsset,
+    int? position,
+  }) => NearbyShopRow(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    location: location ?? this.location,
+    imageAsset: imageAsset ?? this.imageAsset,
+    position: position ?? this.position,
+  );
+  NearbyShopRow copyWithCompanion(NearbyShopsCompanion data) {
+    return NearbyShopRow(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      location: data.location.present ? data.location.value : this.location,
+      imageAsset: data.imageAsset.present
+          ? data.imageAsset.value
+          : this.imageAsset,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NearbyShopRow(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('location: $location, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, location, imageAsset, position);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is NearbyShopRow &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.location == this.location &&
+          other.imageAsset == this.imageAsset &&
+          other.position == this.position);
+}
+
+class NearbyShopsCompanion extends UpdateCompanion<NearbyShopRow> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String> location;
+  final Value<String> imageAsset;
+  final Value<int> position;
+  final Value<int> rowid;
+  const NearbyShopsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.location = const Value.absent(),
+    this.imageAsset = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  NearbyShopsCompanion.insert({
+    required String id,
+    required String name,
+    required String location,
+    required String imageAsset,
+    required int position,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       name = Value(name),
+       location = Value(location),
+       imageAsset = Value(imageAsset),
+       position = Value(position);
+  static Insertable<NearbyShopRow> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? location,
+    Expression<String>? imageAsset,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (location != null) 'location': location,
+      if (imageAsset != null) 'image_asset': imageAsset,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  NearbyShopsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? name,
+    Value<String>? location,
+    Value<String>? imageAsset,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return NearbyShopsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      location: location ?? this.location,
+      imageAsset: imageAsset ?? this.imageAsset,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (location.present) {
+      map['location'] = Variable<String>(location.value);
+    }
+    if (imageAsset.present) {
+      map['image_asset'] = Variable<String>(imageAsset.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('NearbyShopsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('location: $location, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $CatalogSeedsTable extends CatalogSeeds
     with TableInfo<$CatalogSeedsTable, CatalogSeedRow> {
   @override
@@ -1269,6 +2512,9 @@ abstract class _$CatalogDatabase extends GeneratedDatabase {
   late final $HomeSectionsTable homeSections = $HomeSectionsTable(this);
   late final $HomeSectionProductsTable homeSectionProducts =
       $HomeSectionProductsTable(this);
+  late final $MembersTable members = $MembersTable(this);
+  late final $HomeBannersTable homeBanners = $HomeBannersTable(this);
+  late final $NearbyShopsTable nearbyShops = $NearbyShopsTable(this);
   late final $CatalogSeedsTable catalogSeeds = $CatalogSeedsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -1278,6 +2524,9 @@ abstract class _$CatalogDatabase extends GeneratedDatabase {
     products,
     homeSections,
     homeSectionProducts,
+    members,
+    homeBanners,
+    nearbyShops,
     catalogSeeds,
   ];
 }
@@ -2347,6 +3596,672 @@ typedef $$HomeSectionProductsTableProcessedTableManager =
       HomeSectionProduct,
       PrefetchHooks Function({bool sectionId, bool productId})
     >;
+typedef $$MembersTableCreateCompanionBuilder =
+    MembersCompanion Function({
+      required String id,
+      required String name,
+      required String imageAsset,
+      required String tier,
+      required int points,
+      required String nextTier,
+      required int nextTierPoints,
+      required int notificationCount,
+      Value<int> rowid,
+    });
+typedef $$MembersTableUpdateCompanionBuilder =
+    MembersCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> imageAsset,
+      Value<String> tier,
+      Value<int> points,
+      Value<String> nextTier,
+      Value<int> nextTierPoints,
+      Value<int> notificationCount,
+      Value<int> rowid,
+    });
+
+class $$MembersTableFilterComposer
+    extends Composer<_$CatalogDatabase, $MembersTable> {
+  $$MembersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tier => $composableBuilder(
+    column: $table.tier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get points => $composableBuilder(
+    column: $table.points,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get nextTier => $composableBuilder(
+    column: $table.nextTier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get nextTierPoints => $composableBuilder(
+    column: $table.nextTierPoints,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get notificationCount => $composableBuilder(
+    column: $table.notificationCount,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MembersTableOrderingComposer
+    extends Composer<_$CatalogDatabase, $MembersTable> {
+  $$MembersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tier => $composableBuilder(
+    column: $table.tier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get points => $composableBuilder(
+    column: $table.points,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get nextTier => $composableBuilder(
+    column: $table.nextTier,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get nextTierPoints => $composableBuilder(
+    column: $table.nextTierPoints,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get notificationCount => $composableBuilder(
+    column: $table.notificationCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MembersTableAnnotationComposer
+    extends Composer<_$CatalogDatabase, $MembersTable> {
+  $$MembersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tier =>
+      $composableBuilder(column: $table.tier, builder: (column) => column);
+
+  GeneratedColumn<int> get points =>
+      $composableBuilder(column: $table.points, builder: (column) => column);
+
+  GeneratedColumn<String> get nextTier =>
+      $composableBuilder(column: $table.nextTier, builder: (column) => column);
+
+  GeneratedColumn<int> get nextTierPoints => $composableBuilder(
+    column: $table.nextTierPoints,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get notificationCount => $composableBuilder(
+    column: $table.notificationCount,
+    builder: (column) => column,
+  );
+}
+
+class $$MembersTableTableManager
+    extends
+        RootTableManager<
+          _$CatalogDatabase,
+          $MembersTable,
+          MemberRow,
+          $$MembersTableFilterComposer,
+          $$MembersTableOrderingComposer,
+          $$MembersTableAnnotationComposer,
+          $$MembersTableCreateCompanionBuilder,
+          $$MembersTableUpdateCompanionBuilder,
+          (
+            MemberRow,
+            BaseReferences<_$CatalogDatabase, $MembersTable, MemberRow>,
+          ),
+          MemberRow,
+          PrefetchHooks Function()
+        > {
+  $$MembersTableTableManager(_$CatalogDatabase db, $MembersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MembersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MembersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MembersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> imageAsset = const Value.absent(),
+                Value<String> tier = const Value.absent(),
+                Value<int> points = const Value.absent(),
+                Value<String> nextTier = const Value.absent(),
+                Value<int> nextTierPoints = const Value.absent(),
+                Value<int> notificationCount = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MembersCompanion(
+                id: id,
+                name: name,
+                imageAsset: imageAsset,
+                tier: tier,
+                points: points,
+                nextTier: nextTier,
+                nextTierPoints: nextTierPoints,
+                notificationCount: notificationCount,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required String imageAsset,
+                required String tier,
+                required int points,
+                required String nextTier,
+                required int nextTierPoints,
+                required int notificationCount,
+                Value<int> rowid = const Value.absent(),
+              }) => MembersCompanion.insert(
+                id: id,
+                name: name,
+                imageAsset: imageAsset,
+                tier: tier,
+                points: points,
+                nextTier: nextTier,
+                nextTierPoints: nextTierPoints,
+                notificationCount: notificationCount,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MembersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$CatalogDatabase,
+      $MembersTable,
+      MemberRow,
+      $$MembersTableFilterComposer,
+      $$MembersTableOrderingComposer,
+      $$MembersTableAnnotationComposer,
+      $$MembersTableCreateCompanionBuilder,
+      $$MembersTableUpdateCompanionBuilder,
+      (MemberRow, BaseReferences<_$CatalogDatabase, $MembersTable, MemberRow>),
+      MemberRow,
+      PrefetchHooks Function()
+    >;
+typedef $$HomeBannersTableCreateCompanionBuilder =
+    HomeBannersCompanion Function({
+      required String id,
+      required String title,
+      required String badgeLabel,
+      required String imageAsset,
+      required int position,
+      Value<int> rowid,
+    });
+typedef $$HomeBannersTableUpdateCompanionBuilder =
+    HomeBannersCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<String> badgeLabel,
+      Value<String> imageAsset,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$HomeBannersTableFilterComposer
+    extends Composer<_$CatalogDatabase, $HomeBannersTable> {
+  $$HomeBannersTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get badgeLabel => $composableBuilder(
+    column: $table.badgeLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$HomeBannersTableOrderingComposer
+    extends Composer<_$CatalogDatabase, $HomeBannersTable> {
+  $$HomeBannersTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get badgeLabel => $composableBuilder(
+    column: $table.badgeLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$HomeBannersTableAnnotationComposer
+    extends Composer<_$CatalogDatabase, $HomeBannersTable> {
+  $$HomeBannersTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get badgeLabel => $composableBuilder(
+    column: $table.badgeLabel,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$HomeBannersTableTableManager
+    extends
+        RootTableManager<
+          _$CatalogDatabase,
+          $HomeBannersTable,
+          HomeBannerRow,
+          $$HomeBannersTableFilterComposer,
+          $$HomeBannersTableOrderingComposer,
+          $$HomeBannersTableAnnotationComposer,
+          $$HomeBannersTableCreateCompanionBuilder,
+          $$HomeBannersTableUpdateCompanionBuilder,
+          (
+            HomeBannerRow,
+            BaseReferences<_$CatalogDatabase, $HomeBannersTable, HomeBannerRow>,
+          ),
+          HomeBannerRow,
+          PrefetchHooks Function()
+        > {
+  $$HomeBannersTableTableManager(_$CatalogDatabase db, $HomeBannersTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HomeBannersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HomeBannersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HomeBannersTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String> badgeLabel = const Value.absent(),
+                Value<String> imageAsset = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => HomeBannersCompanion(
+                id: id,
+                title: title,
+                badgeLabel: badgeLabel,
+                imageAsset: imageAsset,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                required String badgeLabel,
+                required String imageAsset,
+                required int position,
+                Value<int> rowid = const Value.absent(),
+              }) => HomeBannersCompanion.insert(
+                id: id,
+                title: title,
+                badgeLabel: badgeLabel,
+                imageAsset: imageAsset,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$HomeBannersTableProcessedTableManager =
+    ProcessedTableManager<
+      _$CatalogDatabase,
+      $HomeBannersTable,
+      HomeBannerRow,
+      $$HomeBannersTableFilterComposer,
+      $$HomeBannersTableOrderingComposer,
+      $$HomeBannersTableAnnotationComposer,
+      $$HomeBannersTableCreateCompanionBuilder,
+      $$HomeBannersTableUpdateCompanionBuilder,
+      (
+        HomeBannerRow,
+        BaseReferences<_$CatalogDatabase, $HomeBannersTable, HomeBannerRow>,
+      ),
+      HomeBannerRow,
+      PrefetchHooks Function()
+    >;
+typedef $$NearbyShopsTableCreateCompanionBuilder =
+    NearbyShopsCompanion Function({
+      required String id,
+      required String name,
+      required String location,
+      required String imageAsset,
+      required int position,
+      Value<int> rowid,
+    });
+typedef $$NearbyShopsTableUpdateCompanionBuilder =
+    NearbyShopsCompanion Function({
+      Value<String> id,
+      Value<String> name,
+      Value<String> location,
+      Value<String> imageAsset,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$NearbyShopsTableFilterComposer
+    extends Composer<_$CatalogDatabase, $NearbyShopsTable> {
+  $$NearbyShopsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$NearbyShopsTableOrderingComposer
+    extends Composer<_$CatalogDatabase, $NearbyShopsTable> {
+  $$NearbyShopsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$NearbyShopsTableAnnotationComposer
+    extends Composer<_$CatalogDatabase, $NearbyShopsTable> {
+  $$NearbyShopsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get location =>
+      $composableBuilder(column: $table.location, builder: (column) => column);
+
+  GeneratedColumn<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$NearbyShopsTableTableManager
+    extends
+        RootTableManager<
+          _$CatalogDatabase,
+          $NearbyShopsTable,
+          NearbyShopRow,
+          $$NearbyShopsTableFilterComposer,
+          $$NearbyShopsTableOrderingComposer,
+          $$NearbyShopsTableAnnotationComposer,
+          $$NearbyShopsTableCreateCompanionBuilder,
+          $$NearbyShopsTableUpdateCompanionBuilder,
+          (
+            NearbyShopRow,
+            BaseReferences<_$CatalogDatabase, $NearbyShopsTable, NearbyShopRow>,
+          ),
+          NearbyShopRow,
+          PrefetchHooks Function()
+        > {
+  $$NearbyShopsTableTableManager(_$CatalogDatabase db, $NearbyShopsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$NearbyShopsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$NearbyShopsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$NearbyShopsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> location = const Value.absent(),
+                Value<String> imageAsset = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => NearbyShopsCompanion(
+                id: id,
+                name: name,
+                location: location,
+                imageAsset: imageAsset,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String name,
+                required String location,
+                required String imageAsset,
+                required int position,
+                Value<int> rowid = const Value.absent(),
+              }) => NearbyShopsCompanion.insert(
+                id: id,
+                name: name,
+                location: location,
+                imageAsset: imageAsset,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$NearbyShopsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$CatalogDatabase,
+      $NearbyShopsTable,
+      NearbyShopRow,
+      $$NearbyShopsTableFilterComposer,
+      $$NearbyShopsTableOrderingComposer,
+      $$NearbyShopsTableAnnotationComposer,
+      $$NearbyShopsTableCreateCompanionBuilder,
+      $$NearbyShopsTableUpdateCompanionBuilder,
+      (
+        NearbyShopRow,
+        BaseReferences<_$CatalogDatabase, $NearbyShopsTable, NearbyShopRow>,
+      ),
+      NearbyShopRow,
+      PrefetchHooks Function()
+    >;
 typedef $$CatalogSeedsTableCreateCompanionBuilder =
     CatalogSeedsCompanion Function({required String id, Value<int> rowid});
 typedef $$CatalogSeedsTableUpdateCompanionBuilder =
@@ -2473,6 +4388,12 @@ class $CatalogDatabaseManager {
       $$HomeSectionsTableTableManager(_db, _db.homeSections);
   $$HomeSectionProductsTableTableManager get homeSectionProducts =>
       $$HomeSectionProductsTableTableManager(_db, _db.homeSectionProducts);
+  $$MembersTableTableManager get members =>
+      $$MembersTableTableManager(_db, _db.members);
+  $$HomeBannersTableTableManager get homeBanners =>
+      $$HomeBannersTableTableManager(_db, _db.homeBanners);
+  $$NearbyShopsTableTableManager get nearbyShops =>
+      $$NearbyShopsTableTableManager(_db, _db.nearbyShops);
   $$CatalogSeedsTableTableManager get catalogSeeds =>
       $$CatalogSeedsTableTableManager(_db, _db.catalogSeeds);
 }

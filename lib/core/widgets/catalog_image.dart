@@ -4,16 +4,23 @@ import 'package:flutter/material.dart';
 import '../../l10n/app_localizations.dart';
 
 class CatalogImage extends StatelessWidget {
-  const CatalogImage({super.key, required this.assetPath, this.imageUrl});
+  const CatalogImage({
+    super.key,
+    required this.assetPath,
+    this.imageUrl,
+    this.assetCacheWidth,
+  });
 
   final String assetPath;
   final String? imageUrl;
+  final int? assetCacheWidth;
 
   @override
   Widget build(BuildContext context) {
     final bundledImage = Image.asset(
       assetPath,
       fit: BoxFit.cover,
+      cacheWidth: assetCacheWidth,
       // Keep the tile usable if its bundled image cannot be decoded.
       errorBuilder: (_, _, _) => Center(
         child: Text(AppLocalizations.of(context)!.catalogImageUnavailable),

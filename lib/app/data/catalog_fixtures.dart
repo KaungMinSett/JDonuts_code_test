@@ -10,6 +10,9 @@ typedef CatalogSeed = ({
   List<ProductsCompanion> products,
   List<HomeSectionsCompanion> sections,
   List<HomeSectionProductsCompanion> memberships,
+  MembersCompanion member,
+  List<HomeBannersCompanion> banners,
+  List<NearbyShopsCompanion> shops,
 });
 
 CatalogSeed parseCatalogSeed(String source) {
@@ -17,10 +20,25 @@ CatalogSeed parseCatalogSeed(String source) {
   if (decoded case {
     'products': final List<Object?> products,
     'sections': final List<Object?> sections,
+    'member': final Object? member,
+    'banners': final List<Object?> banners,
+    'shops': final List<Object?> shops,
   } when products.isNotEmpty && sections.isNotEmpty) {
-    return _parseRows(products, sections);
+    return _parseRows(
+      products,
+      sections,
+      member: _parseMember(member),
+      banners: [
+        for (final (position, banner) in banners.indexed)
+          _parseBanner(banner, position),
+      ],
+      shops: [
+        for (final (position, shop) in shops.indexed)
+          _parseShop(shop, position),
+      ],
+    );
   }
-  throw const FormatException('Catalog seed needs products and sections.');
+  throw const FormatException('Catalog seed needs Home data.');
 }
 
 ({String productId, int discountPercent}) parseCatalogDiscountUpdate(
@@ -35,7 +53,13 @@ CatalogSeed parseCatalogSeed(String source) {
   throw const FormatException('Invalid catalog discount update.');
 }
 
-CatalogSeed _parseRows(List<Object?> products, List<Object?> sections) {
+CatalogSeed _parseRows(
+  List<Object?> products,
+  List<Object?> sections, {
+  required MembersCompanion member,
+  required List<HomeBannersCompanion> banners,
+  required List<NearbyShopsCompanion> shops,
+}) {
   // Reject broken links and duplicate IDs before any database writes.
   final productRows = products.map(_parseProduct).toList();
   final productIds = productRows.map((row) => row.id.value).toSet();
@@ -53,7 +77,76 @@ CatalogSeed _parseRows(List<Object?> products, List<Object?> sections) {
     products: productRows,
     sections: sectionRows,
     memberships: memberships,
+    member: member,
+    banners: banners,
+    shops: shops,
   );
+}
+
+MembersCompanion _parseMember(Object? value) {
+  if (value
+      case {
+        'id': final String id,
+        'name': final String name,
+        'imageAsset': final String imageAsset,
+        'tier': final String tier,
+        'points': final int points,
+        'nextTier': final String nextTier,
+        'nextTierPoints': final int nextTierPoints,
+        'notificationCount': final int notificationCount,
+      }
+      when points >= 0 &&
+          nextTierPoints > points &&
+          notificationCount >= 0 &&
+          [id, name, imageAsset, tier, nextTier].every(_hasText)) {
+    return MembersCompanion.insert(
+      id: id,
+      name: name,
+      imageAsset: imageAsset,
+      tier: tier,
+      points: points,
+      nextTier: nextTier,
+      nextTierPoints: nextTierPoints,
+      notificationCount: notificationCount,
+    );
+  }
+  throw const FormatException('Invalid member in catalog seed.');
+}
+
+HomeBannersCompanion _parseBanner(Object? value, int position) {
+  if (value case {
+    'id': final String id,
+    'title': final String title,
+    'badgeLabel': final String badgeLabel,
+    'imageAsset': final String imageAsset,
+  } when [id, title, badgeLabel, imageAsset].every(_hasText)) {
+    return HomeBannersCompanion.insert(
+      id: id,
+      title: title,
+      badgeLabel: badgeLabel,
+      imageAsset: imageAsset,
+      position: position,
+    );
+  }
+  throw const FormatException('Invalid banner in catalog seed.');
+}
+
+NearbyShopsCompanion _parseShop(Object? value, int position) {
+  if (value case {
+    'id': final String id,
+    'name': final String name,
+    'location': final String location,
+    'imageAsset': final String imageAsset,
+  } when [id, name, location, imageAsset].every(_hasText)) {
+    return NearbyShopsCompanion.insert(
+      id: id,
+      name: name,
+      location: location,
+      imageAsset: imageAsset,
+      position: position,
+    );
+  }
+  throw const FormatException('Invalid shop in catalog seed.');
 }
 
 ProductsCompanion _parseProduct(Object? value) {

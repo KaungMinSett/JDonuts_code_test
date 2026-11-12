@@ -29,6 +29,16 @@ abstract final class AppTheme {
   );
   static const onboardingContentPadding = EdgeInsets.fromLTRB(32, 24, 32, 28);
   static const catalogContentPadding = EdgeInsets.all(16);
+  static const homeBackground = Color(0xFFEDF0F1);
+  static const homeHeaderBackground = Color(0xFFBCE1EF);
+  static const orangeBadgeBackground = Color(0xFFC04D00);
+  static const orangeBadgeForeground = Colors.white;
+  static const homeHeaderGutter = 24.0;
+  static const homeHeaderRadius = BorderRadius.vertical(
+    bottom: Radius.circular(24),
+  );
+  static const homeBannerRadius = BorderRadius.vertical(top: Radius.circular(16));
+  static const homeProductCardRadius = BorderRadius.all(Radius.circular(16));
 
   static const _brandCyan = Color(0xFF58CEEB);
   static const _brandPink = Color(0xFFF1589F);

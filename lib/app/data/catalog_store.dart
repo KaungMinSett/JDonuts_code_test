@@ -85,6 +85,9 @@ final class CatalogStore {
         batch.insertAll(_database.products, seed.products);
         batch.insertAll(_database.homeSections, seed.sections);
         batch.insertAll(_database.homeSectionProducts, seed.memberships);
+        batch.insert(_database.members, seed.member);
+        batch.insertAll(_database.homeBanners, seed.banners);
+        batch.insertAll(_database.nearbyShops, seed.shops);
         batch.insert(_database.catalogSeeds, const CatalogSeedRow(id: _seedId));
       });
     });

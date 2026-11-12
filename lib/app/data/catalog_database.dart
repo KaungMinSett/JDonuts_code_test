@@ -37,6 +37,45 @@ class HomeSectionProducts extends Table {
   Set<Column<Object>> get primaryKey => {sectionId, productId};
 }
 
+@DataClassName('MemberRow')
+class Members extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get imageAsset => text()();
+  TextColumn get tier => text()();
+  IntColumn get points => integer()();
+  TextColumn get nextTier => text()();
+  IntColumn get nextTierPoints => integer()();
+  IntColumn get notificationCount => integer()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('HomeBannerRow')
+class HomeBanners extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  TextColumn get badgeLabel => text()();
+  TextColumn get imageAsset => text()();
+  IntColumn get position => integer()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+@DataClassName('NearbyShopRow')
+class NearbyShops extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get location => text()();
+  TextColumn get imageAsset => text()();
+  IntColumn get position => integer()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DataClassName('CatalogSeedRow')
 class CatalogSeeds extends Table {
   TextColumn get id => text()();
@@ -46,7 +85,15 @@ class CatalogSeeds extends Table {
 }
 
 @DriftDatabase(
-  tables: [Products, HomeSections, HomeSectionProducts, CatalogSeeds],
+  tables: [
+    Products,
+    HomeSections,
+    HomeSectionProducts,
+    Members,
+    HomeBanners,
+    NearbyShops,
+    CatalogSeeds,
+  ],
 )
 class CatalogDatabase extends _$CatalogDatabase {
   CatalogDatabase(super.executor);

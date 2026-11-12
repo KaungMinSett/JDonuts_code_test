@@ -75,8 +75,37 @@
   "welcomeTitle": "Welcome to the world of J’donuts",
   "welcomeExplore": "LET’S EXPLORE",
   "homeTitle": "Home",
+  "homeMemberTier": "{tier} member",
+  "@homeMemberTier": {
+    "placeholders": {
+      "tier": { "type": "String" }
+    }
+  },
+  "homeMemberEmpty": "No member profile to show.",
+  "homeBannersEmpty": "No offers to show.",
+  "homeNearbyShopsTitle": "Nearby shops",
+  "homeNearbyShopsEmpty": "No nearby shops to show.",
+  "homePointsToTier": "{points} points to {tier}",
+  "@homePointsToTier": {
+    "placeholders": {
+      "points": { "type": "int", "format": "decimalPattern" },
+      "tier": { "type": "String" }
+    }
+  },
+  "homeNotificationCount": "{count, plural, =0{No notifications} =1{1 notification} other{{count} notifications}}",
+  "@homeNotificationCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "homeOffline": "You’re offline. Showing saved content.",
   "homeCatalogEmpty": "No products to show.",
+  "homeSectionMore": "More from {section}",
+  "@homeSectionMore": {
+    "placeholders": {
+      "section": { "type": "String" }
+    }
+  },
   "catalogLoading": "Loading catalog…",
   "catalogLoadError": "Couldn’t load the catalog.",
   "catalogRefreshOffline": "You’re offline. Connect to refresh the catalog.",
