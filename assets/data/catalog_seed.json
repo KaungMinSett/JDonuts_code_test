@@ -74,11 +74,38 @@
     "name": "Thiri",
     "imageAsset": "assets/images/onboarding_hero.jpeg",
     "tier": "Silver",
+    "tierStartPoints": 678200,
     "points": 680000,
     "nextTier": "Gold",
     "nextTierPoints": 680500,
     "notificationCount": 3
   },
+  "challenges": [
+    {
+      "id": "coco_donuts",
+      "title": "Eat 4 Coco donuts",
+      "completed": 4,
+      "target": 4,
+      "rewardPoints": 100,
+      "imageAsset": "assets/images/donut_1.jpg"
+    },
+    {
+      "id": "sprinkle_donuts",
+      "title": "Eat 4 Sprinkle donuts",
+      "completed": 1,
+      "target": 4,
+      "rewardPoints": 100,
+      "imageAsset": "assets/images/donut_2.jpg"
+    },
+    {
+      "id": "coffee",
+      "title": "Drink 12 coffees",
+      "completed": 9,
+      "target": 12,
+      "rewardPoints": 200,
+      "imageAsset": "assets/images/coffee.jpg"
+    }
+  ],
   "banners": [
     {
       "id": "seasonal_favorites",

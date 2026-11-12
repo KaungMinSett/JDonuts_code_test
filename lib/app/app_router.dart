@@ -13,6 +13,7 @@ import '../auth/presentation/screens/welcome_screen.dart';
 import '../core/domain/result.dart';
 import '../home/presentation/home_screen.dart';
 import '../product/presentation/product_detail_screen.dart';
+import '../rewards/presentation/rewards_screen.dart';
 
 ({String normalizedPhone, bool isLogin})? _otpArguments(Object? extra) {
   if (extra case {
@@ -117,6 +118,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         builder: (_, _) => const HomeScreen(key: Key('home')),
+      ),
+      GoRoute(
+        name: RewardsScreen.routeName,
+        path: '/rewards',
+        builder: (_, _) => const RewardsScreen(),
       ),
       GoRoute(
         name: ProductDetailScreen.routeName,

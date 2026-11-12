@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app/config/app_theme.dart';
 import '../../app/network/reachability_providers.dart';
 import '../../core/domain/result.dart';
 import '../../l10n/app_localizations.dart';
+import '../../rewards/presentation/rewards_screen.dart';
 import '../../settings/presentation/widgets/sign_out_button.dart';
 import 'home_providers.dart';
 import 'widgets/home_catalog_section.dart';
@@ -87,10 +89,30 @@ class _HomeCatalog extends ConsumerWidget {
           SafeArea(
             top: false,
             minimum: AppTheme.catalogContentPadding,
-            child: SignOutButton(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: AppTheme.homeSectionTitleSpacing,
+              children: [_RewardsLink(), SignOutButton()],
+            ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class _RewardsLink extends StatelessWidget {
+  const _RewardsLink();
+
+  @override
+  Widget build(BuildContext context) {
+    // Keep Rewards reachable for verification until the tab bar is wired.
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
+      ),
+      onPressed: () => context.pushNamed(RewardsScreen.routeName),
+      child: Text(AppLocalizations.of(context)!.rewardsLabel),
     );
   }
 }

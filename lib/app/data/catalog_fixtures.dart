@@ -13,6 +13,7 @@ typedef CatalogSeed = ({
   MembersCompanion member,
   List<HomeBannersCompanion> banners,
   List<NearbyShopsCompanion> shops,
+  List<RewardChallengesCompanion> challenges,
 });
 
 CatalogSeed parseCatalogSeed(String source) {
@@ -23,6 +24,7 @@ CatalogSeed parseCatalogSeed(String source) {
     'member': final Object? member,
     'banners': final List<Object?> banners,
     'shops': final List<Object?> shops,
+    'challenges': final List<Object?> challenges,
   } when products.isNotEmpty && sections.isNotEmpty) {
     return _parseRows(
       products,
@@ -36,9 +38,13 @@ CatalogSeed parseCatalogSeed(String source) {
         for (final (position, shop) in shops.indexed)
           _parseShop(shop, position),
       ],
+      challenges: [
+        for (final (position, challenge) in challenges.indexed)
+          _parseChallenge(challenge, position),
+      ],
     );
   }
-  throw const FormatException('Catalog seed needs Home data.');
+  throw const FormatException('Catalog seed needs Home and Rewards data.');
 }
 
 ({String productId, int discountPercent}) parseCatalogDiscountUpdate(
@@ -59,6 +65,7 @@ CatalogSeed _parseRows(
   required MembersCompanion member,
   required List<HomeBannersCompanion> banners,
   required List<NearbyShopsCompanion> shops,
+  required List<RewardChallengesCompanion> challenges,
 }) {
   // Reject broken links and duplicate IDs before any database writes.
   final productRows = products.map(_parseProduct).toList();
@@ -80,6 +87,7 @@ CatalogSeed _parseRows(
     member: member,
     banners: banners,
     shops: shops,
+    challenges: challenges,
   );
 }
 
@@ -90,12 +98,14 @@ MembersCompanion _parseMember(Object? value) {
         'name': final String name,
         'imageAsset': final String imageAsset,
         'tier': final String tier,
+        'tierStartPoints': final int tierStartPoints,
         'points': final int points,
         'nextTier': final String nextTier,
         'nextTierPoints': final int nextTierPoints,
         'notificationCount': final int notificationCount,
       }
-      when points >= 0 &&
+      when tierStartPoints >= 0 &&
+          points >= tierStartPoints &&
           nextTierPoints > points &&
           notificationCount >= 0 &&
           [id, name, imageAsset, tier, nextTier].every(_hasText)) {
@@ -104,6 +114,7 @@ MembersCompanion _parseMember(Object? value) {
       name: name,
       imageAsset: imageAsset,
       tier: tier,
+      tierStartPoints: tierStartPoints,
       points: points,
       nextTier: nextTier,
       nextTierPoints: nextTierPoints,
@@ -147,6 +158,36 @@ NearbyShopsCompanion _parseShop(Object? value, int position) {
     );
   }
   throw const FormatException('Invalid shop in catalog seed.');
+}
+
+RewardChallengesCompanion _parseChallenge(Object? value, int position) {
+  if (value
+      case {
+        'id': final String id,
+        'title': final String title,
+        'completed': final int completed,
+        'target': final int target,
+        'rewardPoints': final int rewardPoints,
+        'imageAsset': final String? imageAsset,
+      }
+      when _hasText(id) &&
+          _hasText(title) &&
+          target > 0 &&
+          completed >= 0 &&
+          completed <= target &&
+          rewardPoints > 0 &&
+          (imageAsset == null || _hasText(imageAsset))) {
+    return RewardChallengesCompanion.insert(
+      id: id,
+      title: title,
+      completed: completed,
+      target: target,
+      rewardPoints: rewardPoints,
+      imageAsset: Value(imageAsset),
+      position: position,
+    );
+  }
+  throw const FormatException('Invalid reward challenge in catalog seed.');
 }
 
 ProductsCompanion _parseProduct(Object? value) {

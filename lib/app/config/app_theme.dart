@@ -47,6 +47,10 @@ abstract final class AppTheme {
   );
   static const homeBannerRadius = BorderRadius.vertical(top: Radius.circular(16));
   static const productCardRadius = BorderRadius.all(Radius.circular(16));
+  static const rewardsPointsText = Color(0xFFB42369);
+  static const rewardsSilver = Color(0xFF606A73);
+  static const rewardsGold = Color(0xFF846500);
+  static const rewardsPlatinum = Color(0xFF006780);
 
   static const _brandCyan = Color(0xFF58CEEB);
   static const _brandPink = Color(0xFFF1589F);

@@ -32,6 +32,7 @@ final class DriftHomeRepository implements HomeRepository {
                     name: member.name,
                     imageAsset: member.imageAsset,
                     tier: member.tier,
+                    tierStartPoints: member.tierStartPoints,
                     points: member.points,
                     nextTier: member.nextTier,
                     nextTierPoints: member.nextTierPoints,

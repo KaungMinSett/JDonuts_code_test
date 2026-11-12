@@ -88,6 +88,7 @@ final class CatalogStore {
         batch.insert(_database.members, seed.member);
         batch.insertAll(_database.homeBanners, seed.banners);
         batch.insertAll(_database.nearbyShops, seed.shops);
+        batch.insertAll(_database.rewardChallenges, seed.challenges);
         batch.insert(_database.catalogSeeds, const CatalogSeedRow(id: _seedId));
       });
     });

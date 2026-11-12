@@ -78,6 +78,37 @@
   "welcomeTitle": "Welcome to the world of J’donuts",
   "welcomeExplore": "LET’S EXPLORE",
   "homeTitle": "Home",
+  "rewardsTitle": "J’Donuts Rewards",
+  "rewardsLabel": "Rewards",
+  "rewardsTotalPoints": "Total points",
+  "rewardsSilver": "Silver",
+  "rewardsGold": "Gold",
+  "rewardsPlatinum": "Platinum",
+  "rewardsCurrentTier": "You’re here now",
+  "rewardsFutureTier": "You’ll be here soon",
+  "rewardsTierRemaining": "{points} pts to {tier}",
+  "@rewardsTierRemaining": {
+    "placeholders": {
+      "points": { "type": "int", "format": "decimalPattern" },
+      "tier": { "type": "String" }
+    }
+  },
+  "rewardsChallengesTitle": "Eat more earn more",
+  "rewardsChallengesEmpty": "No challenges to show.",
+  "rewardsChallengeProgress": "{completed}/{target}",
+  "@rewardsChallengeProgress": {
+    "placeholders": {
+      "completed": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "rewardsChallengePoints": "{points} pts",
+  "@rewardsChallengePoints": {
+    "placeholders": {
+      "points": { "type": "int", "format": "decimalPattern" }
+    }
+  },
+  "rewardsEarn": "Earn",
   "homeMemberTier": "{tier} member",
   "@homeMemberTier": {
     "placeholders": {

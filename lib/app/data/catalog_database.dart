@@ -43,6 +43,7 @@ class Members extends Table {
   TextColumn get name => text()();
   TextColumn get imageAsset => text()();
   TextColumn get tier => text()();
+  IntColumn get tierStartPoints => integer()();
   IntColumn get points => integer()();
   TextColumn get nextTier => text()();
   IntColumn get nextTierPoints => integer()();
@@ -84,6 +85,20 @@ class CatalogSeeds extends Table {
   Set<Column<Object>> get primaryKey => {id};
 }
 
+@DataClassName('RewardChallengeRow')
+class RewardChallenges extends Table {
+  TextColumn get id => text()();
+  TextColumn get title => text()();
+  IntColumn get completed => integer()();
+  IntColumn get target => integer()();
+  IntColumn get rewardPoints => integer()();
+  TextColumn get imageAsset => text().nullable()();
+  IntColumn get position => integer()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
 @DriftDatabase(
   tables: [
     Products,
@@ -92,6 +107,7 @@ class CatalogSeeds extends Table {
     Members,
     HomeBanners,
     NearbyShops,
+    RewardChallenges,
     CatalogSeeds,
   ],
 )

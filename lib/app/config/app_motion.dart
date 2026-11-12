@@ -57,4 +57,38 @@ abstract final class AppMotion {
   static const buttonPressedScale = 0.97;
   static const productQuantityChangeDuration = Duration(milliseconds: 160);
   static const homeSkeletonShimmerDuration = Duration(milliseconds: 1400);
+  static const rewardsEntranceDuration = Duration(milliseconds: 1250);
+  static const rewardsPointsCurve = Curves.easeOutCubic;
+  static const rewardsTierIntervals = [
+    Interval(0.05, 0.30, curve: Curves.easeOut),
+    Interval(0.18, 0.43, curve: Curves.easeOut),
+    Interval(0.31, 0.56, curve: Curves.easeOut),
+  ];
+  static const rewardsTierFillInterval = Interval(
+    0.30,
+    0.80,
+    curve: Curves.easeOutCubic,
+  );
+  static const rewardsBadgeInterval = Interval(
+    0.08,
+    0.42,
+    curve: Curves.easeOutBack,
+  );
+  static const rewardsChallengeSlideFraction = 0.10;
+  static const _rewardsFirstChallengeStart = 0.30;
+  static const _rewardsLastChallengeStart = 0.68;
+  static const _rewardsChallengeIntervalLength = 0.32;
+
+  static Interval rewardsChallengeInterval(int index, int count) {
+    // Spread the card starts across the same timeline for any list length.
+    final position = count > 1 ? index / (count - 1) : 0.0;
+    final start =
+        _rewardsFirstChallengeStart +
+        (_rewardsLastChallengeStart - _rewardsFirstChallengeStart) * position;
+    return Interval(
+      start,
+      start + _rewardsChallengeIntervalLength,
+      curve: Curves.easeOutCubic,
+    );
+  }
 }

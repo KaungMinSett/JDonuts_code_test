@@ -1154,6 +1154,17 @@ class $MembersTable extends Members with TableInfo<$MembersTable, MemberRow> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _tierStartPointsMeta = const VerificationMeta(
+    'tierStartPoints',
+  );
+  @override
+  late final GeneratedColumn<int> tierStartPoints = GeneratedColumn<int>(
+    'tier_start_points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _pointsMeta = const VerificationMeta('points');
   @override
   late final GeneratedColumn<int> points = GeneratedColumn<int>(
@@ -1202,6 +1213,7 @@ class $MembersTable extends Members with TableInfo<$MembersTable, MemberRow> {
     name,
     imageAsset,
     tier,
+    tierStartPoints,
     points,
     nextTier,
     nextTierPoints,
@@ -1247,6 +1259,17 @@ class $MembersTable extends Members with TableInfo<$MembersTable, MemberRow> {
       );
     } else if (isInserting) {
       context.missing(_tierMeta);
+    }
+    if (data.containsKey('tier_start_points')) {
+      context.handle(
+        _tierStartPointsMeta,
+        tierStartPoints.isAcceptableOrUnknown(
+          data['tier_start_points']!,
+          _tierStartPointsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_tierStartPointsMeta);
     }
     if (data.containsKey('points')) {
       context.handle(
@@ -1311,6 +1334,10 @@ class $MembersTable extends Members with TableInfo<$MembersTable, MemberRow> {
         DriftSqlType.string,
         data['${effectivePrefix}tier'],
       )!,
+      tierStartPoints: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tier_start_points'],
+      )!,
       points: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}points'],
@@ -1341,6 +1368,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
   final String name;
   final String imageAsset;
   final String tier;
+  final int tierStartPoints;
   final int points;
   final String nextTier;
   final int nextTierPoints;
@@ -1350,6 +1378,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
     required this.name,
     required this.imageAsset,
     required this.tier,
+    required this.tierStartPoints,
     required this.points,
     required this.nextTier,
     required this.nextTierPoints,
@@ -1362,6 +1391,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
     map['name'] = Variable<String>(name);
     map['image_asset'] = Variable<String>(imageAsset);
     map['tier'] = Variable<String>(tier);
+    map['tier_start_points'] = Variable<int>(tierStartPoints);
     map['points'] = Variable<int>(points);
     map['next_tier'] = Variable<String>(nextTier);
     map['next_tier_points'] = Variable<int>(nextTierPoints);
@@ -1375,6 +1405,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
       name: Value(name),
       imageAsset: Value(imageAsset),
       tier: Value(tier),
+      tierStartPoints: Value(tierStartPoints),
       points: Value(points),
       nextTier: Value(nextTier),
       nextTierPoints: Value(nextTierPoints),
@@ -1392,6 +1423,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
       name: serializer.fromJson<String>(json['name']),
       imageAsset: serializer.fromJson<String>(json['imageAsset']),
       tier: serializer.fromJson<String>(json['tier']),
+      tierStartPoints: serializer.fromJson<int>(json['tierStartPoints']),
       points: serializer.fromJson<int>(json['points']),
       nextTier: serializer.fromJson<String>(json['nextTier']),
       nextTierPoints: serializer.fromJson<int>(json['nextTierPoints']),
@@ -1406,6 +1438,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
       'name': serializer.toJson<String>(name),
       'imageAsset': serializer.toJson<String>(imageAsset),
       'tier': serializer.toJson<String>(tier),
+      'tierStartPoints': serializer.toJson<int>(tierStartPoints),
       'points': serializer.toJson<int>(points),
       'nextTier': serializer.toJson<String>(nextTier),
       'nextTierPoints': serializer.toJson<int>(nextTierPoints),
@@ -1418,6 +1451,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
     String? name,
     String? imageAsset,
     String? tier,
+    int? tierStartPoints,
     int? points,
     String? nextTier,
     int? nextTierPoints,
@@ -1427,6 +1461,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
     name: name ?? this.name,
     imageAsset: imageAsset ?? this.imageAsset,
     tier: tier ?? this.tier,
+    tierStartPoints: tierStartPoints ?? this.tierStartPoints,
     points: points ?? this.points,
     nextTier: nextTier ?? this.nextTier,
     nextTierPoints: nextTierPoints ?? this.nextTierPoints,
@@ -1440,6 +1475,9 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
           ? data.imageAsset.value
           : this.imageAsset,
       tier: data.tier.present ? data.tier.value : this.tier,
+      tierStartPoints: data.tierStartPoints.present
+          ? data.tierStartPoints.value
+          : this.tierStartPoints,
       points: data.points.present ? data.points.value : this.points,
       nextTier: data.nextTier.present ? data.nextTier.value : this.nextTier,
       nextTierPoints: data.nextTierPoints.present
@@ -1458,6 +1496,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
           ..write('name: $name, ')
           ..write('imageAsset: $imageAsset, ')
           ..write('tier: $tier, ')
+          ..write('tierStartPoints: $tierStartPoints, ')
           ..write('points: $points, ')
           ..write('nextTier: $nextTier, ')
           ..write('nextTierPoints: $nextTierPoints, ')
@@ -1472,6 +1511,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
     name,
     imageAsset,
     tier,
+    tierStartPoints,
     points,
     nextTier,
     nextTierPoints,
@@ -1485,6 +1525,7 @@ class MemberRow extends DataClass implements Insertable<MemberRow> {
           other.name == this.name &&
           other.imageAsset == this.imageAsset &&
           other.tier == this.tier &&
+          other.tierStartPoints == this.tierStartPoints &&
           other.points == this.points &&
           other.nextTier == this.nextTier &&
           other.nextTierPoints == this.nextTierPoints &&
@@ -1496,6 +1537,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
   final Value<String> name;
   final Value<String> imageAsset;
   final Value<String> tier;
+  final Value<int> tierStartPoints;
   final Value<int> points;
   final Value<String> nextTier;
   final Value<int> nextTierPoints;
@@ -1506,6 +1548,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
     this.name = const Value.absent(),
     this.imageAsset = const Value.absent(),
     this.tier = const Value.absent(),
+    this.tierStartPoints = const Value.absent(),
     this.points = const Value.absent(),
     this.nextTier = const Value.absent(),
     this.nextTierPoints = const Value.absent(),
@@ -1517,6 +1560,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
     required String name,
     required String imageAsset,
     required String tier,
+    required int tierStartPoints,
     required int points,
     required String nextTier,
     required int nextTierPoints,
@@ -1526,6 +1570,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
        name = Value(name),
        imageAsset = Value(imageAsset),
        tier = Value(tier),
+       tierStartPoints = Value(tierStartPoints),
        points = Value(points),
        nextTier = Value(nextTier),
        nextTierPoints = Value(nextTierPoints),
@@ -1535,6 +1580,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
     Expression<String>? name,
     Expression<String>? imageAsset,
     Expression<String>? tier,
+    Expression<int>? tierStartPoints,
     Expression<int>? points,
     Expression<String>? nextTier,
     Expression<int>? nextTierPoints,
@@ -1546,6 +1592,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
       if (name != null) 'name': name,
       if (imageAsset != null) 'image_asset': imageAsset,
       if (tier != null) 'tier': tier,
+      if (tierStartPoints != null) 'tier_start_points': tierStartPoints,
       if (points != null) 'points': points,
       if (nextTier != null) 'next_tier': nextTier,
       if (nextTierPoints != null) 'next_tier_points': nextTierPoints,
@@ -1559,6 +1606,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
     Value<String>? name,
     Value<String>? imageAsset,
     Value<String>? tier,
+    Value<int>? tierStartPoints,
     Value<int>? points,
     Value<String>? nextTier,
     Value<int>? nextTierPoints,
@@ -1570,6 +1618,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
       name: name ?? this.name,
       imageAsset: imageAsset ?? this.imageAsset,
       tier: tier ?? this.tier,
+      tierStartPoints: tierStartPoints ?? this.tierStartPoints,
       points: points ?? this.points,
       nextTier: nextTier ?? this.nextTier,
       nextTierPoints: nextTierPoints ?? this.nextTierPoints,
@@ -1592,6 +1641,9 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
     }
     if (tier.present) {
       map['tier'] = Variable<String>(tier.value);
+    }
+    if (tierStartPoints.present) {
+      map['tier_start_points'] = Variable<int>(tierStartPoints.value);
     }
     if (points.present) {
       map['points'] = Variable<int>(points.value);
@@ -1618,6 +1670,7 @@ class MembersCompanion extends UpdateCompanion<MemberRow> {
           ..write('name: $name, ')
           ..write('imageAsset: $imageAsset, ')
           ..write('tier: $tier, ')
+          ..write('tierStartPoints: $tierStartPoints, ')
           ..write('points: $points, ')
           ..write('nextTier: $nextTier, ')
           ..write('nextTierPoints: $nextTierPoints, ')
@@ -2354,6 +2407,475 @@ class NearbyShopsCompanion extends UpdateCompanion<NearbyShopRow> {
   }
 }
 
+class $RewardChallengesTable extends RewardChallenges
+    with TableInfo<$RewardChallengesTable, RewardChallengeRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RewardChallengesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _completedMeta = const VerificationMeta(
+    'completed',
+  );
+  @override
+  late final GeneratedColumn<int> completed = GeneratedColumn<int>(
+    'completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _targetMeta = const VerificationMeta('target');
+  @override
+  late final GeneratedColumn<int> target = GeneratedColumn<int>(
+    'target',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _rewardPointsMeta = const VerificationMeta(
+    'rewardPoints',
+  );
+  @override
+  late final GeneratedColumn<int> rewardPoints = GeneratedColumn<int>(
+    'reward_points',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _imageAssetMeta = const VerificationMeta(
+    'imageAsset',
+  );
+  @override
+  late final GeneratedColumn<String> imageAsset = GeneratedColumn<String>(
+    'image_asset',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    title,
+    completed,
+    target,
+    rewardPoints,
+    imageAsset,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'reward_challenges';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<RewardChallengeRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('completed')) {
+      context.handle(
+        _completedMeta,
+        completed.isAcceptableOrUnknown(data['completed']!, _completedMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_completedMeta);
+    }
+    if (data.containsKey('target')) {
+      context.handle(
+        _targetMeta,
+        target.isAcceptableOrUnknown(data['target']!, _targetMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_targetMeta);
+    }
+    if (data.containsKey('reward_points')) {
+      context.handle(
+        _rewardPointsMeta,
+        rewardPoints.isAcceptableOrUnknown(
+          data['reward_points']!,
+          _rewardPointsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_rewardPointsMeta);
+    }
+    if (data.containsKey('image_asset')) {
+      context.handle(
+        _imageAssetMeta,
+        imageAsset.isAcceptableOrUnknown(data['image_asset']!, _imageAssetMeta),
+      );
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  RewardChallengeRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return RewardChallengeRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      completed: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}completed'],
+      )!,
+      target: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target'],
+      )!,
+      rewardPoints: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reward_points'],
+      )!,
+      imageAsset: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_asset'],
+      ),
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $RewardChallengesTable createAlias(String alias) {
+    return $RewardChallengesTable(attachedDatabase, alias);
+  }
+}
+
+class RewardChallengeRow extends DataClass
+    implements Insertable<RewardChallengeRow> {
+  final String id;
+  final String title;
+  final int completed;
+  final int target;
+  final int rewardPoints;
+  final String? imageAsset;
+  final int position;
+  const RewardChallengeRow({
+    required this.id,
+    required this.title,
+    required this.completed,
+    required this.target,
+    required this.rewardPoints,
+    this.imageAsset,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['title'] = Variable<String>(title);
+    map['completed'] = Variable<int>(completed);
+    map['target'] = Variable<int>(target);
+    map['reward_points'] = Variable<int>(rewardPoints);
+    if (!nullToAbsent || imageAsset != null) {
+      map['image_asset'] = Variable<String>(imageAsset);
+    }
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  RewardChallengesCompanion toCompanion(bool nullToAbsent) {
+    return RewardChallengesCompanion(
+      id: Value(id),
+      title: Value(title),
+      completed: Value(completed),
+      target: Value(target),
+      rewardPoints: Value(rewardPoints),
+      imageAsset: imageAsset == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageAsset),
+      position: Value(position),
+    );
+  }
+
+  factory RewardChallengeRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return RewardChallengeRow(
+      id: serializer.fromJson<String>(json['id']),
+      title: serializer.fromJson<String>(json['title']),
+      completed: serializer.fromJson<int>(json['completed']),
+      target: serializer.fromJson<int>(json['target']),
+      rewardPoints: serializer.fromJson<int>(json['rewardPoints']),
+      imageAsset: serializer.fromJson<String?>(json['imageAsset']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'title': serializer.toJson<String>(title),
+      'completed': serializer.toJson<int>(completed),
+      'target': serializer.toJson<int>(target),
+      'rewardPoints': serializer.toJson<int>(rewardPoints),
+      'imageAsset': serializer.toJson<String?>(imageAsset),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  RewardChallengeRow copyWith({
+    String? id,
+    String? title,
+    int? completed,
+    int? target,
+    int? rewardPoints,
+    Value<String?> imageAsset = const Value.absent(),
+    int? position,
+  }) => RewardChallengeRow(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    completed: completed ?? this.completed,
+    target: target ?? this.target,
+    rewardPoints: rewardPoints ?? this.rewardPoints,
+    imageAsset: imageAsset.present ? imageAsset.value : this.imageAsset,
+    position: position ?? this.position,
+  );
+  RewardChallengeRow copyWithCompanion(RewardChallengesCompanion data) {
+    return RewardChallengeRow(
+      id: data.id.present ? data.id.value : this.id,
+      title: data.title.present ? data.title.value : this.title,
+      completed: data.completed.present ? data.completed.value : this.completed,
+      target: data.target.present ? data.target.value : this.target,
+      rewardPoints: data.rewardPoints.present
+          ? data.rewardPoints.value
+          : this.rewardPoints,
+      imageAsset: data.imageAsset.present
+          ? data.imageAsset.value
+          : this.imageAsset,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RewardChallengeRow(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('completed: $completed, ')
+          ..write('target: $target, ')
+          ..write('rewardPoints: $rewardPoints, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    title,
+    completed,
+    target,
+    rewardPoints,
+    imageAsset,
+    position,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is RewardChallengeRow &&
+          other.id == this.id &&
+          other.title == this.title &&
+          other.completed == this.completed &&
+          other.target == this.target &&
+          other.rewardPoints == this.rewardPoints &&
+          other.imageAsset == this.imageAsset &&
+          other.position == this.position);
+}
+
+class RewardChallengesCompanion extends UpdateCompanion<RewardChallengeRow> {
+  final Value<String> id;
+  final Value<String> title;
+  final Value<int> completed;
+  final Value<int> target;
+  final Value<int> rewardPoints;
+  final Value<String?> imageAsset;
+  final Value<int> position;
+  final Value<int> rowid;
+  const RewardChallengesCompanion({
+    this.id = const Value.absent(),
+    this.title = const Value.absent(),
+    this.completed = const Value.absent(),
+    this.target = const Value.absent(),
+    this.rewardPoints = const Value.absent(),
+    this.imageAsset = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RewardChallengesCompanion.insert({
+    required String id,
+    required String title,
+    required int completed,
+    required int target,
+    required int rewardPoints,
+    this.imageAsset = const Value.absent(),
+    required int position,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       title = Value(title),
+       completed = Value(completed),
+       target = Value(target),
+       rewardPoints = Value(rewardPoints),
+       position = Value(position);
+  static Insertable<RewardChallengeRow> custom({
+    Expression<String>? id,
+    Expression<String>? title,
+    Expression<int>? completed,
+    Expression<int>? target,
+    Expression<int>? rewardPoints,
+    Expression<String>? imageAsset,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (title != null) 'title': title,
+      if (completed != null) 'completed': completed,
+      if (target != null) 'target': target,
+      if (rewardPoints != null) 'reward_points': rewardPoints,
+      if (imageAsset != null) 'image_asset': imageAsset,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RewardChallengesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? title,
+    Value<int>? completed,
+    Value<int>? target,
+    Value<int>? rewardPoints,
+    Value<String?>? imageAsset,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return RewardChallengesCompanion(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      completed: completed ?? this.completed,
+      target: target ?? this.target,
+      rewardPoints: rewardPoints ?? this.rewardPoints,
+      imageAsset: imageAsset ?? this.imageAsset,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (completed.present) {
+      map['completed'] = Variable<int>(completed.value);
+    }
+    if (target.present) {
+      map['target'] = Variable<int>(target.value);
+    }
+    if (rewardPoints.present) {
+      map['reward_points'] = Variable<int>(rewardPoints.value);
+    }
+    if (imageAsset.present) {
+      map['image_asset'] = Variable<String>(imageAsset.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RewardChallengesCompanion(')
+          ..write('id: $id, ')
+          ..write('title: $title, ')
+          ..write('completed: $completed, ')
+          ..write('target: $target, ')
+          ..write('rewardPoints: $rewardPoints, ')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $CatalogSeedsTable extends CatalogSeeds
     with TableInfo<$CatalogSeedsTable, CatalogSeedRow> {
   @override
@@ -2515,6 +3037,9 @@ abstract class _$CatalogDatabase extends GeneratedDatabase {
   late final $MembersTable members = $MembersTable(this);
   late final $HomeBannersTable homeBanners = $HomeBannersTable(this);
   late final $NearbyShopsTable nearbyShops = $NearbyShopsTable(this);
+  late final $RewardChallengesTable rewardChallenges = $RewardChallengesTable(
+    this,
+  );
   late final $CatalogSeedsTable catalogSeeds = $CatalogSeedsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -2527,6 +3052,7 @@ abstract class _$CatalogDatabase extends GeneratedDatabase {
     members,
     homeBanners,
     nearbyShops,
+    rewardChallenges,
     catalogSeeds,
   ];
 }
@@ -3602,6 +4128,7 @@ typedef $$MembersTableCreateCompanionBuilder =
       required String name,
       required String imageAsset,
       required String tier,
+      required int tierStartPoints,
       required int points,
       required String nextTier,
       required int nextTierPoints,
@@ -3614,6 +4141,7 @@ typedef $$MembersTableUpdateCompanionBuilder =
       Value<String> name,
       Value<String> imageAsset,
       Value<String> tier,
+      Value<int> tierStartPoints,
       Value<int> points,
       Value<String> nextTier,
       Value<int> nextTierPoints,
@@ -3647,6 +4175,11 @@ class $$MembersTableFilterComposer
 
   ColumnFilters<String> get tier => $composableBuilder(
     column: $table.tier,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get tierStartPoints => $composableBuilder(
+    column: $table.tierStartPoints,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3700,6 +4233,11 @@ class $$MembersTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get tierStartPoints => $composableBuilder(
+    column: $table.tierStartPoints,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get points => $composableBuilder(
     column: $table.points,
     builder: (column) => ColumnOrderings(column),
@@ -3743,6 +4281,11 @@ class $$MembersTableAnnotationComposer
 
   GeneratedColumn<String> get tier =>
       $composableBuilder(column: $table.tier, builder: (column) => column);
+
+  GeneratedColumn<int> get tierStartPoints => $composableBuilder(
+    column: $table.tierStartPoints,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get points =>
       $composableBuilder(column: $table.points, builder: (column) => column);
@@ -3796,6 +4339,7 @@ class $$MembersTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<String> imageAsset = const Value.absent(),
                 Value<String> tier = const Value.absent(),
+                Value<int> tierStartPoints = const Value.absent(),
                 Value<int> points = const Value.absent(),
                 Value<String> nextTier = const Value.absent(),
                 Value<int> nextTierPoints = const Value.absent(),
@@ -3806,6 +4350,7 @@ class $$MembersTableTableManager
                 name: name,
                 imageAsset: imageAsset,
                 tier: tier,
+                tierStartPoints: tierStartPoints,
                 points: points,
                 nextTier: nextTier,
                 nextTierPoints: nextTierPoints,
@@ -3818,6 +4363,7 @@ class $$MembersTableTableManager
                 required String name,
                 required String imageAsset,
                 required String tier,
+                required int tierStartPoints,
                 required int points,
                 required String nextTier,
                 required int nextTierPoints,
@@ -3828,6 +4374,7 @@ class $$MembersTableTableManager
                 name: name,
                 imageAsset: imageAsset,
                 tier: tier,
+                tierStartPoints: tierStartPoints,
                 points: points,
                 nextTier: nextTier,
                 nextTierPoints: nextTierPoints,
@@ -4262,6 +4809,258 @@ typedef $$NearbyShopsTableProcessedTableManager =
       NearbyShopRow,
       PrefetchHooks Function()
     >;
+typedef $$RewardChallengesTableCreateCompanionBuilder =
+    RewardChallengesCompanion Function({
+      required String id,
+      required String title,
+      required int completed,
+      required int target,
+      required int rewardPoints,
+      Value<String?> imageAsset,
+      required int position,
+      Value<int> rowid,
+    });
+typedef $$RewardChallengesTableUpdateCompanionBuilder =
+    RewardChallengesCompanion Function({
+      Value<String> id,
+      Value<String> title,
+      Value<int> completed,
+      Value<int> target,
+      Value<int> rewardPoints,
+      Value<String?> imageAsset,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$RewardChallengesTableFilterComposer
+    extends Composer<_$CatalogDatabase, $RewardChallengesTable> {
+  $$RewardChallengesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get completed => $composableBuilder(
+    column: $table.completed,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get target => $composableBuilder(
+    column: $table.target,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rewardPoints => $composableBuilder(
+    column: $table.rewardPoints,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$RewardChallengesTableOrderingComposer
+    extends Composer<_$CatalogDatabase, $RewardChallengesTable> {
+  $$RewardChallengesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get completed => $composableBuilder(
+    column: $table.completed,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get target => $composableBuilder(
+    column: $table.target,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get rewardPoints => $composableBuilder(
+    column: $table.rewardPoints,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$RewardChallengesTableAnnotationComposer
+    extends Composer<_$CatalogDatabase, $RewardChallengesTable> {
+  $$RewardChallengesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<int> get completed =>
+      $composableBuilder(column: $table.completed, builder: (column) => column);
+
+  GeneratedColumn<int> get target =>
+      $composableBuilder(column: $table.target, builder: (column) => column);
+
+  GeneratedColumn<int> get rewardPoints => $composableBuilder(
+    column: $table.rewardPoints,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get imageAsset => $composableBuilder(
+    column: $table.imageAsset,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$RewardChallengesTableTableManager
+    extends
+        RootTableManager<
+          _$CatalogDatabase,
+          $RewardChallengesTable,
+          RewardChallengeRow,
+          $$RewardChallengesTableFilterComposer,
+          $$RewardChallengesTableOrderingComposer,
+          $$RewardChallengesTableAnnotationComposer,
+          $$RewardChallengesTableCreateCompanionBuilder,
+          $$RewardChallengesTableUpdateCompanionBuilder,
+          (
+            RewardChallengeRow,
+            BaseReferences<
+              _$CatalogDatabase,
+              $RewardChallengesTable,
+              RewardChallengeRow
+            >,
+          ),
+          RewardChallengeRow,
+          PrefetchHooks Function()
+        > {
+  $$RewardChallengesTableTableManager(
+    _$CatalogDatabase db,
+    $RewardChallengesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RewardChallengesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RewardChallengesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RewardChallengesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<int> completed = const Value.absent(),
+                Value<int> target = const Value.absent(),
+                Value<int> rewardPoints = const Value.absent(),
+                Value<String?> imageAsset = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => RewardChallengesCompanion(
+                id: id,
+                title: title,
+                completed: completed,
+                target: target,
+                rewardPoints: rewardPoints,
+                imageAsset: imageAsset,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String title,
+                required int completed,
+                required int target,
+                required int rewardPoints,
+                Value<String?> imageAsset = const Value.absent(),
+                required int position,
+                Value<int> rowid = const Value.absent(),
+              }) => RewardChallengesCompanion.insert(
+                id: id,
+                title: title,
+                completed: completed,
+                target: target,
+                rewardPoints: rewardPoints,
+                imageAsset: imageAsset,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$RewardChallengesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$CatalogDatabase,
+      $RewardChallengesTable,
+      RewardChallengeRow,
+      $$RewardChallengesTableFilterComposer,
+      $$RewardChallengesTableOrderingComposer,
+      $$RewardChallengesTableAnnotationComposer,
+      $$RewardChallengesTableCreateCompanionBuilder,
+      $$RewardChallengesTableUpdateCompanionBuilder,
+      (
+        RewardChallengeRow,
+        BaseReferences<
+          _$CatalogDatabase,
+          $RewardChallengesTable,
+          RewardChallengeRow
+        >,
+      ),
+      RewardChallengeRow,
+      PrefetchHooks Function()
+    >;
 typedef $$CatalogSeedsTableCreateCompanionBuilder =
     CatalogSeedsCompanion Function({required String id, Value<int> rowid});
 typedef $$CatalogSeedsTableUpdateCompanionBuilder =
@@ -4394,6 +5193,8 @@ class $CatalogDatabaseManager {
       $$HomeBannersTableTableManager(_db, _db.homeBanners);
   $$NearbyShopsTableTableManager get nearbyShops =>
       $$NearbyShopsTableTableManager(_db, _db.nearbyShops);
+  $$RewardChallengesTableTableManager get rewardChallenges =>
+      $$RewardChallengesTableTableManager(_db, _db.rewardChallenges);
   $$CatalogSeedsTableTableManager get catalogSeeds =>
       $$CatalogSeedsTableTableManager(_db, _db.catalogSeeds);
 }
