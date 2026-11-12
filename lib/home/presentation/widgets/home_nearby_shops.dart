@@ -17,6 +17,7 @@ class HomeNearbyShops extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       top: false,
+      bottom: false,
       child: HomeSectionState(
         state: ref.watch(homeNearbyShopsProvider),
         onRetry: () => ref.invalidate(homeNearbyShopsProvider),

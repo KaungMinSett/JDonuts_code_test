@@ -130,6 +130,8 @@ base class FakeAuthRepository implements AuthRepository {
       return await operation();
     } on PlatformException {
       return Failure<T, AuthFailure>(AuthFailure.storageUnavailable);
+    } on MissingPluginException {
+      return Failure<T, AuthFailure>(AuthFailure.storageUnavailable);
     }
   }
 }

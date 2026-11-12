@@ -8,6 +8,7 @@ import '../../app/config/app_theme.dart';
 import '../../app/network/reachability_providers.dart';
 import '../../core/domain/result.dart';
 import '../../l10n/app_localizations.dart';
+import '../../settings/presentation/widgets/sign_out_button.dart';
 import 'home_providers.dart';
 import 'widgets/home_catalog_section.dart';
 import 'widgets/home_header_section.dart';
@@ -83,6 +84,11 @@ class _HomeCatalog extends ConsumerWidget {
             child: HomeProductSections(),
           ),
           HomeNearbyShops(),
+          SafeArea(
+            top: false,
+            minimum: AppTheme.catalogContentPadding,
+            child: SignOutButton(),
+          ),
         ],
       ),
     );
