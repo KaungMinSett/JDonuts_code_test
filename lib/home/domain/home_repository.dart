@@ -3,7 +3,7 @@ import '../../core/domain/member_profile.dart';
 import '../../core/domain/result.dart';
 import '../../product/domain/product.dart';
 
-typedef HomeSection = ({String id, String title, List<Product> products});
+typedef HomeSection = ({String id, String title});
 typedef HomeBanner = ({
   String id,
   String title,
@@ -23,6 +23,10 @@ abstract interface class HomeRepository {
   Stream<Result<List<HomeBanner>, CatalogFailure>> watchBanners();
 
   Stream<Result<List<HomeSection>, CatalogFailure>> watchSections();
+
+  Stream<Result<List<Product>, CatalogFailure>> watchSectionProducts(
+    String sectionId,
+  );
 
   Stream<Result<List<NearbyShop>, CatalogFailure>> watchShops();
 

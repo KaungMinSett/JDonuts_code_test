@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 
-import '../../app/data/catalog_database.dart';
 import '../../app/data/catalog_store.dart';
 import '../../core/domain/catalog_failure.dart';
 import '../../core/domain/member_profile.dart';
@@ -65,25 +64,36 @@ final class DriftHomeRepository implements HomeRepository {
   @override
   Stream<Result<List<HomeSection>, CatalogFailure>> watchSections() {
     return _store.watch((database) {
-      final sections = database.homeSections;
+      // Keep titles and ordering available independently of product queries.
+      final sections = database.select(database.homeSections)
+        ..orderBy([(section) => OrderingTerm.asc(section.position)]);
+      return sections.watch().map(
+        (rows) => List<HomeSection>.unmodifiable(
+          rows.map((row) => (id: row.id, title: row.title)),
+        ),
+      );
+    });
+  }
+
+  @override
+  Stream<Result<List<Product>, CatalogFailure>> watchSectionProducts(
+    String sectionId,
+  ) {
+    return _store.watch((database) {
       final memberships = database.homeSectionProducts;
       final products = database.products;
-      // Left joins keep sections with no products visible for the empty state.
+      // Read only this section's products in membership order.
       final query =
-          database.select(sections).join([
-            leftOuterJoin(
-              memberships,
-              memberships.sectionId.equalsExp(sections.id),
-            ),
-            leftOuterJoin(
-              products,
-              products.id.equalsExp(memberships.productId),
-            ),
-          ])..orderBy([
-            OrderingTerm.asc(sections.position),
-            OrderingTerm.asc(memberships.position),
-          ]);
-      return query.watch().map((rows) => _groupSections(rows, database));
+          database.select(memberships).join([
+              innerJoin(products, products.id.equalsExp(memberships.productId)),
+            ])
+            ..where(memberships.sectionId.equals(sectionId))
+            ..orderBy([OrderingTerm.asc(memberships.position)]);
+      return query.watch().map(
+        (rows) => List<Product>.unmodifiable(
+          rows.map((row) => row.readTable(products).toProduct()),
+        ),
+      );
     });
   }
 
@@ -106,29 +116,4 @@ final class DriftHomeRepository implements HomeRepository {
       );
     });
   }
-}
-
-List<HomeSection> _groupSections(
-  List<TypedResult> rows,
-  CatalogDatabase database,
-) {
-  // Group ordered memberships by section while keeping the domain data immutable.
-  final productsBySection = <HomeSectionRow, List<Product>>{};
-  for (final row in rows) {
-    final sectionProducts = productsBySection.putIfAbsent(
-      row.readTable(database.homeSections),
-      () => [],
-    );
-    final product = row.readTableOrNull(database.products);
-    if (product != null) sectionProducts.add(product.toProduct());
-  }
-  return List.unmodifiable(
-    productsBySection.entries.map(
-      (entry) => (
-        id: entry.key.id,
-        title: entry.key.title,
-        products: List<Product>.unmodifiable(entry.value),
-      ),
-    ),
-  );
 }

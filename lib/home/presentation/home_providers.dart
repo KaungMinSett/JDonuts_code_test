@@ -5,6 +5,7 @@ import '../../auth/auth_providers.dart';
 import '../../core/domain/catalog_failure.dart';
 import '../../core/domain/member_profile.dart';
 import '../../core/domain/result.dart';
+import '../../product/domain/product.dart';
 import '../domain/home_repository.dart';
 
 final memberProfileProvider =
@@ -47,6 +48,12 @@ final homeSectionsProvider =
     StreamProvider.autoDispose<Result<List<HomeSection>, CatalogFailure>>(
       (ref) => ref.watch(homeRepositoryProvider).watchSections(),
     );
+
+final homeSectionProductsProvider = StreamProvider.autoDispose
+    .family<Result<List<Product>, CatalogFailure>, String>((ref, sectionId) {
+      // Each row can restart its own subscription after a failure.
+      return ref.watch(homeRepositoryProvider).watchSectionProducts(sectionId);
+    });
 
 final homeNearbyShopsProvider =
     StreamProvider.autoDispose<Result<List<NearbyShop>, CatalogFailure>>(

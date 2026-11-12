@@ -29,13 +29,7 @@ class HomeProductSections extends ConsumerWidget {
         spacing: AppTheme.homeSectionTitleSpacing,
         children: [
           HomeSkeletonBlock(width: 142, height: 24),
-          Row(
-            spacing: 12,
-            children: [
-              Expanded(child: HomeSkeletonBlock(height: 152, radius: 16)),
-              Expanded(child: HomeSkeletonBlock(height: 152, radius: 16)),
-            ],
-          ),
+          _HomeProductCardsSkeleton(),
           HomeSkeletonBlock(width: 114, height: 14),
         ],
       ),
@@ -131,14 +125,11 @@ class _HomeSectionEntrance extends StatelessWidget {
 class HomeCatalogSection extends StatelessWidget {
   const HomeCatalogSection({super.key, required this.section});
 
-  static const _seasonalSectionId = 'seasonal';
   static const _popularSectionId = 'popular';
-  static const _orderAgainSectionId = 'order_again';
   final HomeSection section;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final title = section.id == _popularSectionId
         ? '${section.title} 🔥'
         : section.title;
@@ -147,21 +138,54 @@ class HomeCatalogSection extends StatelessWidget {
       children: [
         HomeSectionHeader(title: title),
         const SizedBox(height: AppTheme.homeSectionTitleSpacing),
-        if (section.products.isEmpty)
-          Text(l10n.homeCatalogEmpty)
-        else
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              spacing: 12,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (final product in section.products)
-                  _buildCard(context, product),
-              ],
-            ),
-          ),
+        // Keep the title visible while its products load or retry.
+        _HomeSectionProducts(sectionId: section.id),
       ],
+    );
+  }
+}
+
+class _HomeSectionProducts extends ConsumerWidget {
+  const _HomeSectionProducts({required this.sectionId});
+
+  final String sectionId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productsQuery = homeSectionProductsProvider(sectionId);
+    final l10n = AppLocalizations.of(context)!;
+    // Invalidate only this section so the other rows keep their content.
+    return HomeSectionState(
+      state: ref.watch(productsQuery),
+      onRetry: () => ref.invalidate(productsQuery),
+      loading: const _HomeProductCardsSkeleton(),
+      builder: (products) => products.isEmpty
+          ? Text(l10n.homeCatalogEmpty)
+          : _HomeProductCards(sectionId: sectionId, products: products),
+    );
+  }
+}
+
+class _HomeProductCards extends StatelessWidget {
+  const _HomeProductCards({required this.sectionId, required this.products});
+
+  static const _seasonalSectionId = 'seasonal';
+  static const _orderAgainSectionId = 'order_again';
+  final String sectionId;
+  final List<Product> products;
+
+  @override
+  Widget build(BuildContext context) {
+    // Keep the row independently scrollable within the Home list.
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        spacing: 12,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final product in products) _buildCard(context, product),
+        ],
+      ),
     );
   }
 
@@ -174,7 +198,7 @@ class HomeCatalogSection extends StatelessWidget {
       );
     }
 
-    return switch (section.id) {
+    return switch (sectionId) {
       _seasonalSectionId => SeasonalCard(product: product, onTap: openProduct),
       _orderAgainSectionId => HomeProductCard.orderAgain(
         product: product,
@@ -182,5 +206,21 @@ class HomeCatalogSection extends StatelessWidget {
       ),
       _ => HomeProductCard.popular(product: product, onTap: openProduct),
     };
+  }
+}
+
+class _HomeProductCardsSkeleton extends StatelessWidget {
+  const _HomeProductCardsSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    // Reserve space for product cards until the section query returns.
+    return const Row(
+      spacing: 12,
+      children: [
+        Expanded(child: HomeSkeletonBlock(height: 152, radius: 16)),
+        Expanded(child: HomeSkeletonBlock(height: 152, radius: 16)),
+      ],
+    );
   }
 }

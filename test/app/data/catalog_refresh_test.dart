@@ -49,13 +49,10 @@ void main() {
     'Overlapping refreshes share one request and update the open Home query',
     () async {
       final discounts = StreamIterator(
-        home.watchSections().map((result) {
-          final sections =
-              (result as Success<List<HomeSection>, CatalogFailure>).value;
-          final seasonal = sections.singleWhere(
-            (section) => section.id == 'seasonal',
-          );
-          return seasonal.products
+        home.watchSectionProducts('seasonal').map((result) {
+          final seasonalProducts =
+              (result as Success<List<Product>, CatalogFailure>).value;
+          return seasonalProducts
               .singleWhere((product) => product.id == 'p_coconut')
               .discountPercent;
         }),
@@ -117,14 +114,17 @@ void main() {
       'popular',
       'order_again',
     ]);
-    final seasonal = sections.first;
-    final coconut = seasonal.products.singleWhere(
+    final seasonalProducts =
+        (await home.watchSectionProducts('seasonal').first
+                as Success<List<Product>, CatalogFailure>)
+            .value;
+    final coconut = seasonalProducts.singleWhere(
       (product) => product.id == 'p_coconut',
     );
     expect(coconut.imageAsset, 'assets/images/donut_1.png');
     expect(Uri.parse(coconut.imageUrl!).host, 'img.magnific.com');
     expect(
-      seasonal.products.map((product) => (product.id, product.discountPercent)),
+      seasonalProducts.map((product) => (product.id, product.discountPercent)),
       [('p_strawberry', 30), ('p_coconut', 10)],
     );
     expect(shops.map((shop) => shop.id), [
@@ -136,10 +136,46 @@ void main() {
 
     // Each linked product opens the same domain record in Product Detail.
     for (final section in sections) {
-      for (final product in section.products) {
+      final sectionProducts =
+          (await home.watchSectionProducts(section.id).first
+                  as Success<List<Product>, CatalogFailure>)
+              .value;
+      for (final product in sectionProducts) {
         final detail = await products.watchProduct(product.id).first;
         expect((detail as Success<Product?, CatalogFailure>).value, product);
       }
     }
   });
+
+  test(
+    'An empty Seasonal section keeps its title and leaves Popular populated',
+    () async {
+      // Import the seed before clearing one section's product memberships.
+      await home.watchSections().first;
+      final seasonalMemberships = database.delete(database.homeSectionProducts)
+        ..where((membership) => membership.sectionId.equals('seasonal'));
+      await seasonalMemberships.go();
+
+      final sections =
+          (await home.watchSections().first
+                  as Success<List<HomeSection>, CatalogFailure>)
+              .value;
+      final seasonal =
+          (await home.watchSectionProducts('seasonal').first
+                  as Success<List<Product>, CatalogFailure>)
+              .value;
+      final popular =
+          (await home.watchSectionProducts('popular').first
+                  as Success<List<Product>, CatalogFailure>)
+              .value;
+
+      expect(sections.first.title, 'Seasonal specials');
+      expect(seasonal, isEmpty);
+      expect(popular.map((product) => product.id), [
+        'p_chocolate',
+        'p_classic',
+        'p_cookies',
+      ]);
+    },
+  );
 }
