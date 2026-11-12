@@ -9,17 +9,19 @@ class CatalogImage extends StatelessWidget {
     required this.assetPath,
     this.imageUrl,
     this.assetCacheWidth,
+    this.fit = BoxFit.cover,
   });
 
   final String assetPath;
   final String? imageUrl;
   final int? assetCacheWidth;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
     final bundledImage = Image.asset(
       assetPath,
-      fit: BoxFit.cover,
+      fit: fit,
       cacheWidth: assetCacheWidth,
       // Keep the tile usable if its bundled image cannot be decoded.
       errorBuilder: (_, _, _) => Center(
@@ -32,7 +34,7 @@ class CatalogImage extends StatelessWidget {
     // Let the plugin check disk first, even if the device is offline.
     return CachedNetworkImage(
       imageUrl: url,
-      fit: BoxFit.cover,
+      fit: fit,
       // Keep the placeholder neutral while the disk cache is being read.
       placeholder: (context, _) => ColoredBox(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,

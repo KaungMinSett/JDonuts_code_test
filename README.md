@@ -11,4 +11,4 @@ State management: Riverpod
 
 ## Demo image
 
-The remote cache demo uses a [pink sprinkled donut by Mateusz Roman on Unsplash](https://unsplash.com/photos/a-pink-donut-with-sprinkles-on-a-pink-background-4wM9P7c8its).
+The remote cache demo uses the [donut photo supplied from Magnific](https://img.magnific.com/premium-photo/donuts-white-background_770606-1006.jpg?semt=ais_hybrid&w=740&q=80). The Coconut Donut record also includes a bundled fallback for first launch offline.

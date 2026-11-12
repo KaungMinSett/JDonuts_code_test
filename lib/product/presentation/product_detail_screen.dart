@@ -5,9 +5,13 @@ import '../../app/config/app_theme.dart';
 import '../../core/domain/result.dart';
 import '../../core/widgets/catalog_image.dart';
 import '../../core/widgets/catalog_load_error.dart';
+import '../../core/widgets/primary_button.dart';
 import '../../l10n/app_localizations.dart';
 import '../domain/product.dart';
 import 'product_providers.dart';
+import 'widgets/product_description.dart';
+import 'widgets/product_hero_card.dart';
+import 'widgets/quantity_stepper.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.productId});
@@ -18,8 +22,19 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.productTitle)),
-      body: _ProductDetails(productId: productId),
+      backgroundColor: AppTheme.catalogBackground,
+      appBar: AppBar(
+        backgroundColor: AppTheme.catalogBackground,
+        scrolledUnderElevation: 0,
+      ),
+      body: Semantics(
+        namesRoute: true,
+        label: AppLocalizations.of(context)!.productTitle,
+        child: SafeArea(
+          top: false,
+          child: _ProductDetails(productId: productId),
+        ),
+      ),
     );
   }
 }
@@ -48,33 +63,79 @@ class _ProductDetails extends ConsumerWidget {
   }
 }
 
-class _ProductContent extends StatelessWidget {
+class _ProductContent extends StatefulWidget {
   const _ProductContent({required this.product});
 
   final Product product;
 
   @override
+  State<_ProductContent> createState() => _ProductContentState();
+}
+
+class _ProductContentState extends State<_ProductContent> {
+  static const _minimumQuantity = 1;
+  static const _stepperOverlap = 24.0;
+  int _quantity = _minimumQuantity;
+
+  void _showCartFeedback() {
+    final l10n = AppLocalizations.of(context)!;
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: Text(
+            l10n.productAddedToCart(_quantity, widget.product.name),
+          ),
+        ),
+      );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final textTheme = Theme.of(context).textTheme;
+    final product = widget.product;
+    final total = l10n.productPriceMmk(product.priceMmk * _quantity);
     return ListView(
       padding: AppTheme.catalogContentPadding,
       children: [
-        AspectRatio(
-          aspectRatio: 1,
-          child: CatalogImage(
-            assetPath: product.imageAsset,
-            imageUrl: product.imageUrl,
-          ),
+        Stack(
+          children: [
+            // Reserve space below the card so the stepper stays tappable.
+            Padding(
+              padding: const EdgeInsets.only(bottom: _stepperOverlap),
+              child: ProductHeroCard(
+                product: product,
+                image: CatalogImage(
+                  assetPath: product.imageAsset,
+                  imageUrl: product.imageUrl,
+                  assetCacheWidth: 800,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: QuantityStepper(
+                  quantity: _quantity,
+                  onDecrease: _quantity == _minimumQuantity
+                      ? null
+                      : () => setState(() => _quantity--),
+                  onIncrease: () => setState(() => _quantity++),
+                ),
+              ),
+            ),
+          ],
         ),
-        Text(product.code, style: textTheme.labelLarge),
-        Text(product.name, style: textTheme.headlineSmall),
-        if (product.isNew) Text(l10n.productNewBadge),
-        Text(
-          l10n.productPriceMmk(product.priceMmk),
-          style: textTheme.titleLarge,
+        const SizedBox(height: 24),
+        ProductDescription(description: product.description),
+        const SizedBox(height: 20),
+        PrimaryButton(
+          label: l10n.productAddToCart(total),
+          onPressed: _showCartFeedback,
         ),
-        Text(product.description),
       ],
     );
   }

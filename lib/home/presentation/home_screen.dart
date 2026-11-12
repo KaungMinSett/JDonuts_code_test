@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
     return const AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: AppTheme.homeBackground,
+        backgroundColor: AppTheme.catalogBackground,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -78,12 +78,11 @@ class _HomeCatalog extends ConsumerWidget {
           HomeHeaderSection(),
           SafeArea(
             top: false,
+            bottom: false,
             minimum: AppTheme.catalogContentPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [HomeProductSections(), HomeNearbyShops()],
-            ),
+            child: HomeProductSections(),
           ),
+          HomeNearbyShops(),
         ],
       ),
     );

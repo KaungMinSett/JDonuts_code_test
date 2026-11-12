@@ -55,4 +55,6 @@ abstract final class AppMotion {
   static const buttonPressDuration = Duration(milliseconds: 120);
   static const buttonPressCurve = Curves.easeOut;
   static const buttonPressedScale = 0.97;
+  static const productQuantityChangeDuration = Duration(milliseconds: 160);
+  static const homeSkeletonShimmerDuration = Duration(milliseconds: 1400);
 }

@@ -4,18 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/domain/catalog_failure.dart';
 import '../../../core/domain/result.dart';
 import '../../../core/widgets/catalog_load_error.dart';
-import '../../../l10n/app_localizations.dart';
+import 'home_skeleton.dart';
 
 class HomeSectionState<T> extends StatelessWidget {
   const HomeSectionState({
     super.key,
     required this.state,
     required this.onRetry,
+    required this.loading,
     required this.builder,
   });
 
   final AsyncValue<Result<T, CatalogFailure>> state;
   final VoidCallback onRetry;
+  final Widget loading;
   final Widget Function(T data) builder;
 
   @override
@@ -25,7 +27,7 @@ class HomeSectionState<T> extends StatelessWidget {
       AsyncData(value: Success(value: final data)) => builder(data),
       AsyncData(value: Failure()) ||
       AsyncError() => CatalogLoadError(onRetry: onRetry),
-      _ => Text(AppLocalizations.of(context)!.catalogLoading),
+      _ => HomeSkeleton(child: loading),
     };
   }
 }

@@ -8,6 +8,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../domain/home_repository.dart';
 import '../home_providers.dart';
 import 'home_section_state.dart';
+import 'home_skeleton.dart';
 
 class HomeBannerCarousel extends ConsumerWidget {
   const HomeBannerCarousel({super.key});
@@ -22,6 +23,10 @@ class HomeBannerCarousel extends ConsumerWidget {
       child: HomeSectionState(
         state: ref.watch(homeBannersProvider),
         onRetry: () => ref.invalidate(homeBannersProvider),
+        loading: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppTheme.homeHeaderGutter),
+          child: HomeSkeletonBlock(radius: 16),
+        ),
         builder: (banners) => switch (banners.length) {
           0 => Center(child: Text(l10n.homeBannersEmpty)),
           1 => Padding(

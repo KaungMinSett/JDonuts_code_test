@@ -23,14 +23,14 @@ class SeasonalCard extends StatelessWidget {
       width: _width,
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppTheme.homeProductCardRadius,
+        borderRadius: AppTheme.productCardRadius,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AspectRatio(
               aspectRatio: _imageAspectRatio,
               child: ClipRRect(
-                borderRadius: AppTheme.homeProductCardRadius,
+                borderRadius: AppTheme.productCardRadius,
                 child: Stack(
                   fit: StackFit.expand,
                   children: [

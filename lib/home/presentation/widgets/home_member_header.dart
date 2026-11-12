@@ -9,6 +9,7 @@ import '../../../core/widgets/pill_badge.dart';
 import '../../../l10n/app_localizations.dart';
 import '../home_providers.dart';
 import 'home_section_state.dart';
+import 'home_skeleton.dart';
 
 class HomeMemberHeader extends ConsumerWidget {
   const HomeMemberHeader({super.key});
@@ -21,6 +22,33 @@ class HomeMemberHeader extends ConsumerWidget {
       child: HomeSectionState(
         state: ref.watch(memberProfileProvider),
         onRetry: () => ref.invalidate(memberProfileProvider),
+        loading: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppTheme.homeHeaderGutter),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 12,
+            children: [
+              Row(
+                spacing: 12,
+                children: [
+                  HomeSkeletonBlock(width: 56, height: 56, radius: 28),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: [
+                        HomeSkeletonBlock(width: 112, height: 20),
+                        HomeSkeletonBlock(width: 78, height: 12),
+                      ],
+                    ),
+                  ),
+                  HomeSkeletonBlock(width: 48, height: 28, radius: 14),
+                ],
+              ),
+              HomeSkeletonBlock(width: 152, height: 24, radius: 12),
+            ],
+          ),
+        ),
         builder: (member) => member == null
             ? Padding(
                 padding: const EdgeInsets.symmetric(

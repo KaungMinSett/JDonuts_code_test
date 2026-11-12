@@ -118,10 +118,15 @@ void main() {
       'order_again',
     ]);
     final seasonal = sections.first;
-    expect(seasonal.products.map((product) => (product.id, product.discountPercent)), [
-      ('p_strawberry', 30),
-      ('p_coconut', 10),
-    ]);
+    final coconut = seasonal.products.singleWhere(
+      (product) => product.id == 'p_coconut',
+    );
+    expect(coconut.imageAsset, 'assets/images/donut_1.jpg');
+    expect(Uri.parse(coconut.imageUrl!).host, 'img.magnific.com');
+    expect(
+      seasonal.products.map((product) => (product.id, product.discountPercent)),
+      [('p_strawberry', 30), ('p_coconut', 10)],
+    );
     expect(shops.map((shop) => shop.id), [
       'junction_city',
       'myanmar_plaza',

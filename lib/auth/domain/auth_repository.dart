@@ -25,5 +25,8 @@ abstract interface class AuthRepository {
 
   Future<Result<String?, AuthFailure>> restoreSession();
 
+  /// Returns the name saved for the active account, or null when signed out.
+  Future<Result<String?, AuthFailure>> readSignedInName();
+
   Future<Result<void, AuthFailure>> logOut();
 }

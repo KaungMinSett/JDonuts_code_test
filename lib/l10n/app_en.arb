@@ -83,8 +83,15 @@
   },
   "homeMemberEmpty": "No member profile to show.",
   "homeBannersEmpty": "No offers to show.",
-  "homeNearbyShopsTitle": "Nearby shops",
+  "homeNearbyShopCount": "{count, plural, =1{There is 1 J’Donut shop near you} other{There are {count} J’Donut shops near you}}",
+  "@homeNearbyShopCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "homeNearbyShopsEmpty": "No nearby shops to show.",
+  "homeNearbyShopsExplore": "EXPLORE NOW",
+  "homeNearbyShopsOrderOnline": "Order Online",
   "homePointsToTier": "{points} points to {tier}",
   "@homePointsToTier": {
     "placeholders": {
@@ -115,6 +122,22 @@
   "productTitle": "Product Detail",
   "productNotFound": "This product is unavailable.",
   "productNewBadge": "New",
+  "productDescriptionTitle": "What’s this?",
+  "productDecreaseQuantity": "Decrease quantity",
+  "productIncreaseQuantity": "Increase quantity",
+  "productAddToCart": "ADD TO CART  |  {total}",
+  "@productAddToCart": {
+    "placeholders": {
+      "total": { "type": "String" }
+    }
+  },
+  "productAddedToCart": "{quantity} × {name} added to cart",
+  "@productAddedToCart": {
+    "placeholders": {
+      "quantity": { "type": "int", "format": "decimalPattern" },
+      "name": { "type": "String" }
+    }
+  },
   "productDiscount": "{percent}% off",
   "@productDiscount": {
     "placeholders": {
