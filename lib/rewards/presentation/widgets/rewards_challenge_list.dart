@@ -25,10 +25,6 @@ class RewardsChallengeList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppTheme.homeSectionTitleSpacing,
         children: [
-          Text(
-            l10n.rewardsChallengesTitle,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
           if (challenges.isEmpty) Text(l10n.rewardsChallengesEmpty),
           for (final (index, challenge) in challenges.indexed)
             _ChallengeEntrance(
@@ -41,7 +37,7 @@ class RewardsChallengeList extends StatelessWidget {
                   ),
                 ),
               ),
-              child: RewardChallengeCard(challenge: challenge),
+              challenge: challenge,
             ),
         ],
       ),
@@ -53,23 +49,29 @@ class _ChallengeEntrance extends StatelessWidget {
   const _ChallengeEntrance({
     super.key,
     required this.progress,
-    required this.child,
+    required this.challenge,
   });
 
   final Animation<double> progress;
-  final Widget child;
+  final RewardChallenge challenge;
 
   @override
   Widget build(BuildContext context) {
+    final entrance = progress.drive(
+      CurveTween(curve: AppMotion.rewardsChallengeEntranceCurve),
+    );
     // Lift and fade in each card on its own part of the shared timeline.
     return SlideTransition(
-      position: progress.drive(
+      position: entrance.drive(
         Tween(
           begin: const Offset(0, AppMotion.rewardsChallengeSlideFraction),
           end: Offset.zero,
         ),
       ),
-      child: FadeTransition(opacity: progress, child: child),
+      child: FadeTransition(
+        opacity: entrance,
+        child: RewardChallengeCard(challenge: challenge, entrance: progress),
+      ),
     );
   }
 }

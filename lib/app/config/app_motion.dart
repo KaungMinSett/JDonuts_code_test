@@ -58,6 +58,8 @@ abstract final class AppMotion {
   static const productQuantityChangeDuration = Duration(milliseconds: 160);
   static const homeSkeletonShimmerDuration = Duration(milliseconds: 1400);
   static const rewardsEntranceDuration = Duration(milliseconds: 1250);
+  static const rewardsTabTransitionDuration = Duration(milliseconds: 240);
+  static const rewardsTabContentCurve = Curves.easeOutCubic;
   static const rewardsPointsCurve = Curves.easeOutCubic;
   static const rewardsTierIntervals = [
     Interval(0.05, 0.30, curve: Curves.easeOut),
@@ -75,6 +77,15 @@ abstract final class AppMotion {
     curve: Curves.easeOutBack,
   );
   static const rewardsChallengeSlideFraction = 0.10;
+  static const rewardsChallengeEntranceCurve = Curves.easeOutCubic;
+  static const rewardsChallengeArtworkInterval = Interval(
+    0.15,
+    1,
+    curve: Curves.easeOutCubic,
+  );
+  static const rewardsEarnPulseInterval = Interval(0.40, 1);
+  static const rewardsEarnPulseScale = 1.08;
+  static const rewardsEarnPulseCurve = Curves.easeInOut;
   static const _rewardsFirstChallengeStart = 0.30;
   static const _rewardsLastChallengeStart = 0.68;
   static const _rewardsChallengeIntervalLength = 0.32;
@@ -85,10 +96,6 @@ abstract final class AppMotion {
     final start =
         _rewardsFirstChallengeStart +
         (_rewardsLastChallengeStart - _rewardsFirstChallengeStart) * position;
-    return Interval(
-      start,
-      start + _rewardsChallengeIntervalLength,
-      curve: Curves.easeOutCubic,
-    );
+    return Interval(start, start + _rewardsChallengeIntervalLength);
   }
 }

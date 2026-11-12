@@ -95,6 +95,8 @@
   },
   "rewardsChallengesTitle": "Eat more earn more",
   "rewardsChallengesEmpty": "No challenges to show.",
+  "rewardsGiftTab": "Gift",
+  "rewardsGiftsEmpty": "No gifts to show.",
   "rewardsChallengeProgress": "{completed}/{target}",
   "@rewardsChallengeProgress": {
     "placeholders": {
@@ -126,7 +128,7 @@
   "homeNearbyShopsEmpty": "No nearby shops to show.",
   "homeNearbyShopsExplore": "EXPLORE NOW",
   "homeNearbyShopsOrderOnline": "Order Online",
-  "homePointsToTier": "{points} points to {tier}",
+  "homePointsToTier": "{points} points left to become {tier} Member",
   "@homePointsToTier": {
     "placeholders": {
       "points": { "type": "int", "format": "decimalPattern" },

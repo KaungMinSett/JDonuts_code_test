@@ -71,8 +71,9 @@ class _TierStep extends StatelessWidget {
     required this.lineProgress,
   });
 
-  static const _markerSize = 24.0;
+  static const _markerSize = 30.0;
   static const _connectorWidth = 3.0;
+  static const _stepSpacing = 52.0;
 
   final String label;
   final String description;
@@ -88,23 +89,32 @@ class _TierStep extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: EdgeInsets.only(
-            bottom: hasNextTier ? AppTheme.homeSectionSpacing : 0,
-          ),
+          padding: EdgeInsets.only(bottom: hasNextTier ? _stepSpacing : 0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: AppTheme.homeSectionTitleSpacing,
             children: [
-              Icon(
-                isCurrent ? Icons.shield : Icons.shield_outlined,
-                color: color,
-                size: _markerSize,
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(
+                    Icons.shield,
+                    color: color.withValues(alpha: isCurrent ? 0.42 : 0.22),
+                    size: _markerSize,
+                  ),
+                  Icon(Icons.shield_outlined, color: color, size: _markerSize),
+                ],
               ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(label, style: textTheme.titleSmall),
+                    Text(
+                      label,
+                      style: textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                     Text(description, style: textTheme.bodySmall),
                   ],
                 ),

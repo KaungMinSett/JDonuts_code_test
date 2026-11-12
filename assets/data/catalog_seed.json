@@ -8,7 +8,7 @@
       "priceMmk": 3200,
       "isNew": true,
       "discountPercent": 10,
-      "imageAsset": "assets/images/donut_1.jpg",
+      "imageAsset": "assets/images/donut_1.png",
       "imageUrl": "https://img.magnific.com/premium-photo/donuts-white-background_770606-1006.jpg?semt=ais_hybrid&w=740&q=80"
     },
     {
@@ -19,7 +19,7 @@
       "priceMmk": 3500,
       "isNew": true,
       "discountPercent": 30,
-      "imageAsset": "assets/images/donut_2.jpg"
+      "imageAsset": "assets/images/donut_2.png"
     },
     {
       "id": "p_chocolate",
@@ -29,7 +29,7 @@
       "priceMmk": 3400,
       "isNew": false,
       "discountPercent": 10,
-      "imageAsset": "assets/images/donut_1.jpg"
+      "imageAsset": "assets/images/donut_1.png"
     },
     {
       "id": "p_classic",
@@ -39,7 +39,7 @@
       "priceMmk": 2800,
       "isNew": false,
       "discountPercent": null,
-      "imageAsset": "assets/images/donut_2.jpg"
+      "imageAsset": "assets/images/donut_2.png"
     },
     {
       "id": "p_cookies",
@@ -49,7 +49,7 @@
       "priceMmk": 3800,
       "isNew": false,
       "discountPercent": null,
-      "imageAsset": "assets/images/donut_1.jpg"
+      "imageAsset": "assets/images/donut_1.png"
     }
   ],
   "sections": [
@@ -87,7 +87,7 @@
       "completed": 4,
       "target": 4,
       "rewardPoints": 100,
-      "imageAsset": "assets/images/donut_1.jpg"
+      "imageAsset": "assets/images/donut_1.png"
     },
     {
       "id": "sprinkle_donuts",
@@ -95,7 +95,7 @@
       "completed": 1,
       "target": 4,
       "rewardPoints": 100,
-      "imageAsset": "assets/images/donut_2.jpg"
+      "imageAsset": "assets/images/donut_2.png"
     },
     {
       "id": "coffee",
@@ -103,7 +103,7 @@
       "completed": 9,
       "target": 12,
       "rewardPoints": 200,
-      "imageAsset": "assets/images/coffee.jpg"
+      "imageAsset": "assets/images/tea.png"
     }
   ],
   "banners": [

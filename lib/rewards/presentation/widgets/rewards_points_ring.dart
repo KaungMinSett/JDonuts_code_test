@@ -21,6 +21,7 @@ class RewardsPointsRing extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final formatPoints = MaterialLocalizations.of(context).formatDecimal;
+    final textTheme = Theme.of(context).textTheme;
     return AspectRatio(
       aspectRatio: 1,
       child: Semantics(
@@ -41,16 +42,20 @@ class RewardsPointsRing extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(l10n.rewardsTotalPoints),
+                  Text(
+                    l10n.rewardsTotalPoints,
+                    style: textTheme.labelLarge?.copyWith(
+                      color: AppTheme.rewardsPointsText,
+                    ),
+                  ),
                   AnimatedBuilder(
                     animation: progress,
                     builder: (context, _) => Text(
                       formatPoints((points * progress.value).round()),
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(
-                            color: AppTheme.rewardsPointsText,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: AppTheme.rewardsPointsText,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -70,13 +75,16 @@ class _PointsRingPainter extends CustomPainter {
     required this.color,
   }) : super(repaint: progress);
 
+  static const _startAngle = -math.pi / 2;
+  static const _sprinkleCount = 18;
+
   final Animation<double> progress;
   final double target;
   final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final strokeWidth = size.shortestSide * 0.15;
+    final strokeWidth = size.shortestSide * 0.21;
     final radius = (size.shortestSide - strokeWidth) / 2;
     final center = size.center(Offset.zero);
     final paint = Paint()
@@ -94,11 +102,38 @@ class _PointsRingPainter extends CustomPainter {
     if (sweep == 0) return;
     canvas.drawArc(
       Rect.fromCircle(center: center, radius: radius),
-      -math.pi / 2,
+      _startAngle,
       sweep,
       false,
       paint..color = color,
     );
+    _paintSprinkles(canvas, center, radius, strokeWidth, sweep);
+  }
+
+  void _paintSprinkles(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    double strokeWidth,
+    double sweep,
+  ) {
+    final paint = Paint()
+      ..color = Color.lerp(color, AppTheme.productCardSurface, 0.42)!
+      ..strokeWidth = strokeWidth * 0.10
+      ..strokeCap = StrokeCap.round;
+    final step = 2 * math.pi / _sprinkleCount;
+    // Keep the sprinkles inside the frosted part as the pink arc sweeps in.
+    for (var index = 0; index < _sprinkleCount; index++) {
+      final position = step * (index + 0.5);
+      if (position > sweep) break;
+      final angle = _startAngle + position;
+      final radialOffset = strokeWidth * (index.isEven ? 0.20 : -0.18);
+      final middle =
+          center + Offset.fromDirection(angle, radius + radialOffset);
+      final tilt = index.isEven ? math.pi / 5 : -math.pi / 4;
+      final halfLength = Offset.fromDirection(angle + tilt, strokeWidth * 0.13);
+      canvas.drawLine(middle - halfLength, middle + halfLength, paint);
+    }
   }
 
   @override

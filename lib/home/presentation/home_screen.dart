@@ -75,7 +75,10 @@ class _HomeCatalog extends ConsumerWidget {
     return RefreshIndicator(
       onRefresh: () => _refreshFromPull(context, ref),
       child: ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
+        // Accept refresh drags while keeping content against the header.
+        physics: const ClampingScrollPhysics(
+          parent: AlwaysScrollableScrollPhysics(),
+        ),
         padding: EdgeInsets.zero,
         children: const [
           HomeHeaderSection(),

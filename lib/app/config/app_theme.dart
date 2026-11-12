@@ -39,7 +39,7 @@ abstract final class AppTheme {
   static const homeHeaderBackground = Color(0xFFBCE1EF);
   static const homeSkeletonBase = Color(0xFFCED9DD);
   static const homeSkeletonHighlight = Color(0xFFF5FAFB);
-  static const orangeBadgeBackground = Color(0xFFC04D00);
+  static const orangeBadgeBackground = Color(0xfff57c24);
   static const orangeBadgeForeground = Colors.white;
   static const homeHeaderGutter = 24.0;
   static const homeHeaderRadius = BorderRadius.vertical(
