@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/config/app_motion.dart';
 import '../../../app/config/app_theme.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../product/domain/product.dart';
@@ -38,14 +39,91 @@ class HomeProductSections extends ConsumerWidget {
           HomeSkeletonBlock(width: 114, height: 14),
         ],
       ),
-      builder: (sections) => Column(
-        spacing: AppTheme.homeSectionSpacing,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (sections.isEmpty) Text(l10n.homeCatalogEmpty),
-          for (final section in sections) HomeCatalogSection(section: section),
-        ],
+      builder: (sections) => sections.isEmpty
+          ? Text(l10n.homeCatalogEmpty)
+          : _HomeProductRows(sections: sections),
+    );
+  }
+}
+
+class _HomeProductRows extends StatefulWidget {
+  const _HomeProductRows({required this.sections});
+
+  final List<HomeSection> sections;
+
+  @override
+  State<_HomeProductRows> createState() => _HomeProductRowsState();
+}
+
+class _HomeProductRowsState extends State<_HomeProductRows>
+    with SingleTickerProviderStateMixin {
+  late final _entrance = AnimationController(
+    vsync: this,
+    duration: AppMotion.homeSectionEntranceDuration,
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // The rows only mount after the first successful catalog read.
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _entrance.value = 1;
+    } else if (_entrance.isDismissed && !_entrance.isAnimating) {
+      _entrance.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _entrance.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: AppTheme.homeSectionSpacing,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final (index, section) in widget.sections.indexed)
+          _HomeSectionEntrance(
+            key: ValueKey(section.id),
+            progress: _entrance.drive(
+              CurveTween(
+                curve: AppMotion.homeSectionEntranceInterval(
+                  index,
+                  widget.sections.length,
+                ),
+              ),
+            ),
+            child: HomeCatalogSection(section: section),
+          ),
+      ],
+    );
+  }
+}
+
+class _HomeSectionEntrance extends StatelessWidget {
+  const _HomeSectionEntrance({
+    super.key,
+    required this.progress,
+    required this.child,
+  });
+
+  final Animation<double> progress;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    // Fade and lift this row within its window of the shared timeline.
+    return SlideTransition(
+      position: progress.drive(
+        Tween(
+          begin: const Offset(0, AppMotion.homeSectionSlideFraction),
+          end: Offset.zero,
+        ),
       ),
+      child: FadeTransition(opacity: progress, child: child),
     );
   }
 }
