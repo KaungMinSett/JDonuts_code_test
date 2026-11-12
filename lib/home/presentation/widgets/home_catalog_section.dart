@@ -40,7 +40,10 @@ class _ProductTile extends StatelessWidget {
       child: ListTile(
         leading: SizedBox.square(
           dimension: _thumbnailSize,
-          child: CatalogImage(assetPath: product.imageAsset),
+          child: CatalogImage(
+            assetPath: product.imageAsset,
+            imageUrl: product.imageUrl,
+          ),
         ),
         title: Text(product.name),
         subtitle: discount == null

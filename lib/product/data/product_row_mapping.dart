@@ -12,5 +12,6 @@ extension ProductRowMapping on ProductRow {
     isNew: isNew,
     discountPercent: discountPercent,
     imageAsset: imageAsset,
+    imageUrl: imageUrl,
   );
 }

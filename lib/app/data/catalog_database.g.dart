@@ -92,6 +92,17 @@ class $ProductsTable extends Products
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _imageUrlMeta = const VerificationMeta(
+    'imageUrl',
+  );
+  @override
+  late final GeneratedColumn<String> imageUrl = GeneratedColumn<String>(
+    'image_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -102,6 +113,7 @@ class $ProductsTable extends Products
     isNew,
     discountPercent,
     imageAsset,
+    imageUrl,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -180,6 +192,12 @@ class $ProductsTable extends Products
     } else if (isInserting) {
       context.missing(_imageAssetMeta);
     }
+    if (data.containsKey('image_url')) {
+      context.handle(
+        _imageUrlMeta,
+        imageUrl.isAcceptableOrUnknown(data['image_url']!, _imageUrlMeta),
+      );
+    }
     return context;
   }
 
@@ -221,6 +239,10 @@ class $ProductsTable extends Products
         DriftSqlType.string,
         data['${effectivePrefix}image_asset'],
       )!,
+      imageUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_url'],
+      ),
     );
   }
 
@@ -239,6 +261,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
   final bool isNew;
   final int? discountPercent;
   final String imageAsset;
+  final String? imageUrl;
   const ProductRow({
     required this.id,
     required this.code,
@@ -248,6 +271,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
     required this.isNew,
     this.discountPercent,
     required this.imageAsset,
+    this.imageUrl,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -262,6 +286,9 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
       map['discount_percent'] = Variable<int>(discountPercent);
     }
     map['image_asset'] = Variable<String>(imageAsset);
+    if (!nullToAbsent || imageUrl != null) {
+      map['image_url'] = Variable<String>(imageUrl);
+    }
     return map;
   }
 
@@ -277,6 +304,9 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
           ? const Value.absent()
           : Value(discountPercent),
       imageAsset: Value(imageAsset),
+      imageUrl: imageUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageUrl),
     );
   }
 
@@ -294,6 +324,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
       isNew: serializer.fromJson<bool>(json['isNew']),
       discountPercent: serializer.fromJson<int?>(json['discountPercent']),
       imageAsset: serializer.fromJson<String>(json['imageAsset']),
+      imageUrl: serializer.fromJson<String?>(json['imageUrl']),
     );
   }
   @override
@@ -308,6 +339,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
       'isNew': serializer.toJson<bool>(isNew),
       'discountPercent': serializer.toJson<int?>(discountPercent),
       'imageAsset': serializer.toJson<String>(imageAsset),
+      'imageUrl': serializer.toJson<String?>(imageUrl),
     };
   }
 
@@ -320,6 +352,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
     bool? isNew,
     Value<int?> discountPercent = const Value.absent(),
     String? imageAsset,
+    Value<String?> imageUrl = const Value.absent(),
   }) => ProductRow(
     id: id ?? this.id,
     code: code ?? this.code,
@@ -331,6 +364,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
         ? discountPercent.value
         : this.discountPercent,
     imageAsset: imageAsset ?? this.imageAsset,
+    imageUrl: imageUrl.present ? imageUrl.value : this.imageUrl,
   );
   ProductRow copyWithCompanion(ProductsCompanion data) {
     return ProductRow(
@@ -348,6 +382,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
       imageAsset: data.imageAsset.present
           ? data.imageAsset.value
           : this.imageAsset,
+      imageUrl: data.imageUrl.present ? data.imageUrl.value : this.imageUrl,
     );
   }
 
@@ -361,7 +396,8 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
           ..write('priceMmk: $priceMmk, ')
           ..write('isNew: $isNew, ')
           ..write('discountPercent: $discountPercent, ')
-          ..write('imageAsset: $imageAsset')
+          ..write('imageAsset: $imageAsset, ')
+          ..write('imageUrl: $imageUrl')
           ..write(')'))
         .toString();
   }
@@ -376,6 +412,7 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
     isNew,
     discountPercent,
     imageAsset,
+    imageUrl,
   );
   @override
   bool operator ==(Object other) =>
@@ -388,7 +425,8 @@ class ProductRow extends DataClass implements Insertable<ProductRow> {
           other.priceMmk == this.priceMmk &&
           other.isNew == this.isNew &&
           other.discountPercent == this.discountPercent &&
-          other.imageAsset == this.imageAsset);
+          other.imageAsset == this.imageAsset &&
+          other.imageUrl == this.imageUrl);
 }
 
 class ProductsCompanion extends UpdateCompanion<ProductRow> {
@@ -400,6 +438,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
   final Value<bool> isNew;
   final Value<int?> discountPercent;
   final Value<String> imageAsset;
+  final Value<String?> imageUrl;
   final Value<int> rowid;
   const ProductsCompanion({
     this.id = const Value.absent(),
@@ -410,6 +449,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
     this.isNew = const Value.absent(),
     this.discountPercent = const Value.absent(),
     this.imageAsset = const Value.absent(),
+    this.imageUrl = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ProductsCompanion.insert({
@@ -421,6 +461,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
     required bool isNew,
     this.discountPercent = const Value.absent(),
     required String imageAsset,
+    this.imageUrl = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        code = Value(code),
@@ -438,6 +479,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
     Expression<bool>? isNew,
     Expression<int>? discountPercent,
     Expression<String>? imageAsset,
+    Expression<String>? imageUrl,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -449,6 +491,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
       if (isNew != null) 'is_new': isNew,
       if (discountPercent != null) 'discount_percent': discountPercent,
       if (imageAsset != null) 'image_asset': imageAsset,
+      if (imageUrl != null) 'image_url': imageUrl,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -462,6 +505,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
     Value<bool>? isNew,
     Value<int?>? discountPercent,
     Value<String>? imageAsset,
+    Value<String?>? imageUrl,
     Value<int>? rowid,
   }) {
     return ProductsCompanion(
@@ -473,6 +517,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
       isNew: isNew ?? this.isNew,
       discountPercent: discountPercent ?? this.discountPercent,
       imageAsset: imageAsset ?? this.imageAsset,
+      imageUrl: imageUrl ?? this.imageUrl,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -504,6 +549,9 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
     if (imageAsset.present) {
       map['image_asset'] = Variable<String>(imageAsset.value);
     }
+    if (imageUrl.present) {
+      map['image_url'] = Variable<String>(imageUrl.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -521,6 +569,7 @@ class ProductsCompanion extends UpdateCompanion<ProductRow> {
           ..write('isNew: $isNew, ')
           ..write('discountPercent: $discountPercent, ')
           ..write('imageAsset: $imageAsset, ')
+          ..write('imageUrl: $imageUrl, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1243,6 +1292,7 @@ typedef $$ProductsTableCreateCompanionBuilder =
       required bool isNew,
       Value<int?> discountPercent,
       required String imageAsset,
+      Value<String?> imageUrl,
       Value<int> rowid,
     });
 typedef $$ProductsTableUpdateCompanionBuilder =
@@ -1255,6 +1305,7 @@ typedef $$ProductsTableUpdateCompanionBuilder =
       Value<bool> isNew,
       Value<int?> discountPercent,
       Value<String> imageAsset,
+      Value<String?> imageUrl,
       Value<int> rowid,
     });
 
@@ -1339,6 +1390,11 @@ class $$ProductsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get imageUrl => $composableBuilder(
+    column: $table.imageUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> homeSectionProductsRefs(
     Expression<bool> Function($$HomeSectionProductsTableFilterComposer f) f,
   ) {
@@ -1413,6 +1469,11 @@ class $$ProductsTableOrderingComposer
     column: $table.imageAsset,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get imageUrl => $composableBuilder(
+    column: $table.imageUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ProductsTableAnnotationComposer
@@ -1453,6 +1514,9 @@ class $$ProductsTableAnnotationComposer
     column: $table.imageAsset,
     builder: (column) => column,
   );
+
+  GeneratedColumn<String> get imageUrl =>
+      $composableBuilder(column: $table.imageUrl, builder: (column) => column);
 
   Expression<T> homeSectionProductsRefs<T extends Object>(
     Expression<T> Function($$HomeSectionProductsTableAnnotationComposer a) f,
@@ -1517,6 +1581,7 @@ class $$ProductsTableTableManager
                 Value<bool> isNew = const Value.absent(),
                 Value<int?> discountPercent = const Value.absent(),
                 Value<String> imageAsset = const Value.absent(),
+                Value<String?> imageUrl = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProductsCompanion(
                 id: id,
@@ -1527,6 +1592,7 @@ class $$ProductsTableTableManager
                 isNew: isNew,
                 discountPercent: discountPercent,
                 imageAsset: imageAsset,
+                imageUrl: imageUrl,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -1539,6 +1605,7 @@ class $$ProductsTableTableManager
                 required bool isNew,
                 Value<int?> discountPercent = const Value.absent(),
                 required String imageAsset,
+                Value<String?> imageUrl = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProductsCompanion.insert(
                 id: id,
@@ -1549,6 +1616,7 @@ class $$ProductsTableTableManager
                 isNew: isNew,
                 discountPercent: discountPercent,
                 imageAsset: imageAsset,
+                imageUrl: imageUrl,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

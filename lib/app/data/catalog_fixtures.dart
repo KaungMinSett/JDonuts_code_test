@@ -58,16 +58,17 @@ CatalogSeed _parseRows(List<Object?> products, List<Object?> sections) {
 
 ProductsCompanion _parseProduct(Object? value) {
   if (value
-      case {
-        'id': final String id,
-        'code': final String code,
-        'name': final String name,
-        'description': final String description,
-        'priceMmk': final int priceMmk,
-        'isNew': final bool isNew,
-        'discountPercent': final int? discountPercent,
-        'imageAsset': final String imageAsset,
-      }
+      case final Map<String, Object?> product &&
+          {
+            'id': final String id,
+            'code': final String code,
+            'name': final String name,
+            'description': final String description,
+            'priceMmk': final int priceMmk,
+            'isNew': final bool isNew,
+            'discountPercent': final int? discountPercent,
+            'imageAsset': final String imageAsset,
+          }
       when priceMmk > 0 &&
           _isValidDiscount(discountPercent) &&
           [id, code, name, description, imageAsset].every(_hasText)) {
@@ -80,6 +81,7 @@ ProductsCompanion _parseProduct(Object? value) {
       isNew: isNew,
       discountPercent: Value(discountPercent),
       imageAsset: imageAsset,
+      imageUrl: Value(_parseImageUrl(product['imageUrl'])),
     );
   }
   throw const FormatException('Invalid product in catalog seed.');
@@ -127,3 +129,15 @@ bool _hasText(String value) => value.trim().isNotEmpty;
 
 bool _isValidDiscount(int? value) =>
     value == null || (value > 0 && value <= _maximumDiscountPercent);
+
+String? _parseImageUrl(Object? value) {
+  // Products can rely entirely on their bundled artwork.
+  if (value == null) return null;
+  if (value is String) {
+    final uri = Uri.tryParse(value);
+    if (uri != null && uri.scheme == 'https' && uri.host.isNotEmpty) {
+      return value;
+    }
+  }
+  throw const FormatException('Product image URL must be HTTPS.');
+}

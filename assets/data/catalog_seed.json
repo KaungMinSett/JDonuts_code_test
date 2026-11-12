@@ -8,7 +8,8 @@
       "priceMmk": 3200,
       "isNew": true,
       "discountPercent": 10,
-      "imageAsset": "assets/images/onboarding_hero.jpeg"
+      "imageAsset": "assets/images/onboarding_hero.jpeg",
+      "imageUrl": "https://images.unsplash.com/photo-1640115954466-595cc0c9b0bc?fit=crop&w=900&q=80&fm=jpg"
     }
   ],
   "sections": [

@@ -62,7 +62,10 @@ class _ProductContent extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 1,
-          child: CatalogImage(assetPath: product.imageAsset),
+          child: CatalogImage(
+            assetPath: product.imageAsset,
+            imageUrl: product.imageUrl,
+          ),
         ),
         Text(product.code, style: textTheme.labelLarge),
         Text(product.name, style: textTheme.headlineSmall),

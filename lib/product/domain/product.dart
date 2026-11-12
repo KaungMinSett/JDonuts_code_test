@@ -7,4 +7,5 @@ typedef Product = ({
   bool isNew,
   int? discountPercent,
   String imageAsset,
+  String? imageUrl,
 });

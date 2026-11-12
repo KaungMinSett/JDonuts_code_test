@@ -12,6 +12,7 @@ class Products extends Table {
   BoolColumn get isNew => boolean()();
   IntColumn get discountPercent => integer().nullable()();
   TextColumn get imageAsset => text()();
+  TextColumn get imageUrl => text().nullable()();
 
   @override
   Set<Column<Object>> get primaryKey => {id};
