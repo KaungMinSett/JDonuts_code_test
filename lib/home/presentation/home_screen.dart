@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/config/app_theme.dart';
+import '../../app/data/catalog_providers.dart';
 import '../../app/network/reachability_providers.dart';
 import '../../core/domain/result.dart';
 import '../../l10n/app_localizations.dart';
-import 'home_providers.dart';
 import 'widgets/home_catalog_section.dart';
 import 'widgets/home_header_section.dart';
 import 'widgets/home_nearby_shops.dart';

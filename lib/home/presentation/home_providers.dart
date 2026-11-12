@@ -5,12 +5,7 @@ import '../../auth/auth_providers.dart';
 import '../../core/domain/catalog_failure.dart';
 import '../../core/domain/member_profile.dart';
 import '../../core/domain/result.dart';
-import '../data/drift_home_repository.dart';
 import '../domain/home_repository.dart';
-
-final homeRepositoryProvider = Provider<HomeRepository>(
-  (ref) => DriftHomeRepository(ref.watch(catalogStoreProvider)),
-);
 
 final memberProfileProvider =
     StreamProvider.autoDispose<Result<MemberProfile?, CatalogFailure>>((ref) {
