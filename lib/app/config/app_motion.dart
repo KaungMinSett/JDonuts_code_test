@@ -57,6 +57,8 @@ abstract final class AppMotion {
   static const buttonPressedScale = 0.97;
   static const productQuantityChangeDuration = Duration(milliseconds: 160);
   static const homeSkeletonShimmerDuration = Duration(milliseconds: 1400);
+  static const mainTabSlideDuration = Duration(milliseconds: 250);
+  static const mainTabSlideCurve = Curves.easeInOutCubic;
   static const rewardsEntranceDuration = Duration(milliseconds: 1250);
   static const rewardsTabTransitionDuration = Duration(milliseconds: 240);
   static const rewardsTabContentCurve = Curves.easeOutCubic;

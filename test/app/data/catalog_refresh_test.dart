@@ -121,7 +121,7 @@ void main() {
     final coconut = seasonal.products.singleWhere(
       (product) => product.id == 'p_coconut',
     );
-    expect(coconut.imageAsset, 'assets/images/donut_1.jpg');
+    expect(coconut.imageAsset, 'assets/images/donut_1.png');
     expect(Uri.parse(coconut.imageUrl!).host, 'img.magnific.com');
     expect(
       seasonal.products.map((product) => (product.id, product.discountPercent)),

@@ -34,6 +34,8 @@ class SeasonalCard extends StatelessWidget {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    // Give transparent product images the shared white surface.
+                    const ColoredBox(color: AppTheme.productCardSurface),
                     CatalogImage(
                       assetPath: product.imageAsset,
                       imageUrl: product.imageUrl,

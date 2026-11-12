@@ -77,7 +77,7 @@ class _RewardsFrame extends StatelessWidget {
         actions: [?badge],
       ),
       backgroundColor: AppTheme.catalogBackground,
-      body: SafeArea(top: false, child: body),
+      body: SafeArea(top: false, bottom: false, child: body),
     );
   }
 }
@@ -138,6 +138,7 @@ class _RewardsContentState extends State<_RewardsContent>
             : AppMotion.rewardsTabTransitionDuration,
         // Keep the selected tab above the scroll view so it survives scrolling.
         child: ListView(
+          // Default list padding lets the last card scroll above the bar.
           // Keep the white summary flush with the app bar during a pull.
           physics: const ClampingScrollPhysics(),
           children: [

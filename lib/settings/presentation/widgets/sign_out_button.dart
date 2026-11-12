@@ -28,7 +28,7 @@ class _SignOutButtonState extends ConsumerState<SignOutButton> {
     if (!messenger.mounted) return;
 
     if (result is Success) {
-      // Replace the protected route even if the footer scrolled offscreen.
+      // Remove the signed-in navigation shell after clearing the session.
       router.go('/');
       return;
     }

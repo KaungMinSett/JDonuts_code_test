@@ -14,6 +14,8 @@ import '../core/domain/result.dart';
 import '../home/presentation/home_screen.dart';
 import '../product/presentation/product_detail_screen.dart';
 import '../rewards/presentation/rewards_screen.dart';
+import '../settings/presentation/settings_screen.dart';
+import 'widgets/app_bottom_navigation_bar.dart';
 
 ({String normalizedPhone, bool isLogin})? _otpArguments(Object? extra) {
   if (extra case {
@@ -57,7 +59,7 @@ Future<String?> _redirectForSession(
     return isAuthPage ? '/home' : null;
   }
 
-  // Require a confirmed session for Welcome, Home, and Product Detail.
+  // Require a confirmed session for the signed-in routes.
   return isAuthPage ? null : '/';
 }
 
@@ -115,14 +117,37 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(path: '/welcome', builder: (_, _) => const WelcomeScreen()),
-      GoRoute(
-        path: '/home',
-        builder: (_, _) => const HomeScreen(key: Key('home')),
-      ),
-      GoRoute(
-        name: RewardsScreen.routeName,
-        path: '/rewards',
-        builder: (_, _) => const RewardsScreen(),
+      ShellRoute(
+        // Keep one bar mounted while the nested navigator swaps tab pages.
+        builder: (_, state, child) => Scaffold(
+          extendBody: true,
+          body: child,
+          bottomNavigationBar: AppBottomNavigationBar(location: state.uri.path),
+        ),
+        routes: [
+          GoRoute(
+            path: '/home',
+            pageBuilder: (_, state) => NoTransitionPage<void>(
+              key: state.pageKey,
+              child: const HomeScreen(key: Key('home')),
+            ),
+          ),
+          GoRoute(
+            name: RewardsScreen.routeName,
+            path: '/rewards',
+            pageBuilder: (_, state) => NoTransitionPage<void>(
+              key: state.pageKey,
+              child: const RewardsScreen(),
+            ),
+          ),
+          GoRoute(
+            path: '/settings',
+            pageBuilder: (_, state) => NoTransitionPage<void>(
+              key: state.pageKey,
+              child: const SettingsScreen(),
+            ),
+          ),
+        ],
       ),
       GoRoute(
         name: ProductDetailScreen.routeName,
