@@ -48,6 +48,9 @@
   },
   "otpSigningIn": "Signing in…",
   "otpSessionSaveFailed": "Couldn’t sign in. Tap Continue to try again.",
+  "signOut": "Sign out",
+  "signingOut": "Signing out…",
+  "signOutFailed": "Couldn’t sign out. Try again.",
   "registrationNameTitle": "What’s your name?",
   "registrationFirstName": "First Name",
   "registrationLastName": "Last Name",
@@ -73,5 +76,122 @@
   "registrationSaving": "Creating account…",
   "registrationSaveFailed": "Couldn’t create your account. Tap Continue to try again.",
   "welcomeTitle": "Welcome to the world of J’donuts",
-  "welcomeExplore": "LET’S EXPLORE"
+  "welcomeExplore": "LET’S EXPLORE",
+  "homeTitle": "Home",
+  "settingsTitle": "Settings",
+  "mainMenuLabel": "Menu",
+  "mainWalletLabel": "Wallet",
+  "rewardsTitle": "J’Donuts Rewards",
+  "rewardsLabel": "Rewards",
+  "rewardsTotalPoints": "Total points",
+  "rewardsSilver": "Silver",
+  "rewardsGold": "Gold",
+  "rewardsPlatinum": "Platinum",
+  "rewardsCurrentTier": "You’re here now",
+  "rewardsFutureTier": "You’ll be here soon",
+  "rewardsTierRemaining": "{points} pts to {tier}",
+  "@rewardsTierRemaining": {
+    "placeholders": {
+      "points": { "type": "int", "format": "decimalPattern" },
+      "tier": { "type": "String" }
+    }
+  },
+  "rewardsChallengesTitle": "Eat more earn more",
+  "rewardsChallengesEmpty": "No challenges to show.",
+  "rewardsGiftTab": "Gift",
+  "rewardsGiftsEmpty": "No gifts to show.",
+  "rewardsChallengeProgress": "{completed}/{target}",
+  "@rewardsChallengeProgress": {
+    "placeholders": {
+      "completed": { "type": "int" },
+      "target": { "type": "int" }
+    }
+  },
+  "rewardsChallengePoints": "{points} pts",
+  "@rewardsChallengePoints": {
+    "placeholders": {
+      "points": { "type": "int", "format": "decimalPattern" }
+    }
+  },
+  "rewardsEarn": "Earn",
+  "homeMemberTier": "{tier} member",
+  "@homeMemberTier": {
+    "placeholders": {
+      "tier": { "type": "String" }
+    }
+  },
+  "homeMemberEmpty": "No member profile to show.",
+  "homeBannersEmpty": "No offers to show.",
+  "homeNearbyShopCount": "{count, plural, =1{There is 1 J’Donut shop near you} other{There are {count} J’Donut shops near you}}",
+  "@homeNearbyShopCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "homeNearbyShopsEmpty": "No nearby shops to show.",
+  "homeNearbyShopsExplore": "EXPLORE NOW",
+  "homeNearbyShopsOrderOnline": "Order Online",
+  "homePointsToTier": "{points} points left to become {tier} Member",
+  "@homePointsToTier": {
+    "placeholders": {
+      "points": { "type": "int", "format": "decimalPattern" },
+      "tier": { "type": "String" }
+    }
+  },
+  "homeNotificationCount": "{count, plural, =0{No notifications} =1{1 notification} other{{count} notifications}}",
+  "@homeNotificationCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "homeOffline": "You’re offline. Showing saved content.",
+  "homeCatalogEmpty": "No products to show.",
+  "homeSectionMore": "More from {section}",
+  "@homeSectionMore": {
+    "placeholders": {
+      "section": { "type": "String" }
+    }
+  },
+  "catalogLoading": "Loading catalog…",
+  "catalogLoadError": "Couldn’t load the catalog.",
+  "catalogRefreshOffline": "You’re offline. Connect to refresh the catalog.",
+  "catalogRefreshFailed": "Couldn’t refresh the catalog. Try again.",
+  "catalogRetry": "Try again",
+  "catalogImageUnavailable": "Image unavailable",
+  "productTitle": "Product Detail",
+  "productNotFound": "This product is unavailable.",
+  "productNewBadge": "New",
+  "productDescriptionTitle": "What’s this?",
+  "productDecreaseQuantity": "Decrease quantity",
+  "productIncreaseQuantity": "Increase quantity",
+  "productAddToCart": "ADD TO CART  |  {total}",
+  "@productAddToCart": {
+    "placeholders": {
+      "total": { "type": "String" }
+    }
+  },
+  "productAddedToCart": "{quantity} × {name} added to cart",
+  "@productAddedToCart": {
+    "placeholders": {
+      "quantity": { "type": "int", "format": "decimalPattern" },
+      "name": { "type": "String" }
+    }
+  },
+  "productDiscount": "{percent}% off",
+  "@productDiscount": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "productPriceMmk": "{price} MMK",
+  "@productPriceMmk": {
+    "placeholders": {
+      "price": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  }
 }

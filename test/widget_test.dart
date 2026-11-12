@@ -8,10 +8,13 @@
 import 'package:donuts_code_test/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('App opens on the onboarding route', (tester) async {
+    // Simulate a cold launch with no active session in secure storage.
+    FlutterSecureStorage.setMockInitialValues({});
     await tester.pumpWidget(
       const ProviderScope(child: JDonutsApp()),
     );

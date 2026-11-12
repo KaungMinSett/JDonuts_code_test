@@ -61,6 +61,14 @@ void main() {
             registeredPhone,
           ),
         );
+        expect(
+          await repository.readSignedInName(),
+          isA<Success<String?, AuthFailure>>().having(
+            (name) => name.value,
+            'registered name',
+            'May',
+          ),
+        );
 
         expect(await repository.logOut(), isA<Success<void, AuthFailure>>());
         expect(
@@ -96,5 +104,41 @@ void main() {
         );
       },
     );
+
+    test('reads the registered full name for the active account', () async {
+      const otherPhone = '+959777123456';
+      final birthday = DateTime(2000, 1, 1);
+      await repository.register(
+        normalizedPhone: registeredPhone,
+        firstName: 'May',
+        lastName: 'Aung',
+        dateOfBirth: birthday,
+      );
+      await repository.register(
+        normalizedPhone: otherPhone,
+        firstName: 'Thiri',
+        dateOfBirth: birthday,
+      );
+      await repository.startSessionForVerifiedPhone(registeredPhone);
+
+      expect(
+        await repository.readSignedInName(),
+        isA<Success<String?, AuthFailure>>().having(
+          (name) => name.value,
+          'active account name',
+          'May Aung',
+        ),
+      );
+
+      await repository.logOut();
+      expect(
+        await repository.readSignedInName(),
+        isA<Success<String?, AuthFailure>>().having(
+          (name) => name.value,
+          'signed-out name',
+          isNull,
+        ),
+      );
+    });
   });
 }

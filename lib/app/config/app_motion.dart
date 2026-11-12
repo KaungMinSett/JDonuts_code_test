@@ -55,4 +55,63 @@ abstract final class AppMotion {
   static const buttonPressDuration = Duration(milliseconds: 120);
   static const buttonPressCurve = Curves.easeOut;
   static const buttonPressedScale = 0.97;
+  static const productQuantityChangeDuration = Duration(milliseconds: 160);
+  static const homeSkeletonShimmerDuration = Duration(milliseconds: 1400);
+  static const homeSectionEntranceDuration = Duration(milliseconds: 850);
+  static const homeSectionSlideFraction = 0.06;
+  static const _homeLastSectionStart = 0.45;
+  static const homeBannerAutoplayInterval = Duration(seconds: 5);
+  static const homeBannerSlideDuration = Duration(milliseconds: 450);
+  static const homeBannerSlideCurve = Curves.easeInOutCubic;
+  static const mainTabSlideDuration = Duration(milliseconds: 250);
+  static const mainTabSlideCurve = Curves.easeInOutCubic;
+  static const rewardsEntranceDuration = Duration(milliseconds: 1250);
+  static const rewardsTabTransitionDuration = Duration(milliseconds: 240);
+  static const rewardsTabContentCurve = Curves.easeOutCubic;
+  static const rewardsPointsCurve = Curves.easeOutCubic;
+  static const rewardsTierIntervals = [
+    Interval(0.05, 0.30, curve: Curves.easeOut),
+    Interval(0.18, 0.43, curve: Curves.easeOut),
+    Interval(0.31, 0.56, curve: Curves.easeOut),
+  ];
+  static const rewardsTierFillInterval = Interval(
+    0.30,
+    0.80,
+    curve: Curves.easeOutCubic,
+  );
+  static const rewardsBadgeInterval = Interval(
+    0.08,
+    0.42,
+    curve: Curves.easeOutBack,
+  );
+  static const rewardsChallengeSlideFraction = 0.10;
+  static const rewardsChallengeEntranceCurve = Curves.easeOutCubic;
+  static const rewardsChallengeArtworkInterval = Interval(
+    0.15,
+    1,
+    curve: Curves.easeOutCubic,
+  );
+  static const rewardsEarnPulseInterval = Interval(0.40, 1);
+  static const rewardsEarnPulseScale = 1.08;
+  static const rewardsEarnPulseCurve = Curves.easeInOut;
+  static const _rewardsFirstChallengeStart = 0.30;
+  static const _rewardsLastChallengeStart = 0.68;
+  static const _rewardsChallengeIntervalLength = 0.32;
+
+  static Interval homeSectionEntranceInterval(int index, int count) {
+    // Spread the row starts across the first 45% of the entrance.
+    final position = count > 1 ? index / (count - 1) : 0.0;
+    final start = position * _homeLastSectionStart;
+    final end = 1 - _homeLastSectionStart + start;
+    return Interval(start, end, curve: Curves.easeOutCubic);
+  }
+
+  static Interval rewardsChallengeInterval(int index, int count) {
+    // Spread the card starts across the same timeline for any list length.
+    final position = count > 1 ? index / (count - 1) : 0.0;
+    final start =
+        _rewardsFirstChallengeStart +
+        (_rewardsLastChallengeStart - _rewardsFirstChallengeStart) * position;
+    return Interval(start, start + _rewardsChallengeIntervalLength);
+  }
 }

@@ -89,6 +89,25 @@ base class FakeAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<Result<String?, AuthFailure>> readSignedInName() {
+    return _runStorageOperation<String?>(() async {
+      final activePhone = await _storage.read(key: _activePhoneKey);
+      if (activePhone == null) return const Success(null);
+
+      // Read the name from the active account
+      final accounts = await _readRegisteredAccounts();
+      if (accounts[activePhone] case {
+        'firstName': final String firstName,
+        'lastName': final String? lastName,
+      }) {
+        final name = [firstName, ?lastName].join(' ').trim();
+        if (name.isNotEmpty) return Success(name);
+      }
+      return const Failure(AuthFailure.accountNotFound);
+    });
+  }
+
+  @override
   Future<Result<void, AuthFailure>> logOut() {
     return _runStorageOperation<void>(() async {
       // Clear the session while preserving all registered accounts.
@@ -110,6 +129,8 @@ base class FakeAuthRepository implements AuthRepository {
     try {
       return await operation();
     } on PlatformException {
+      return Failure<T, AuthFailure>(AuthFailure.storageUnavailable);
+    } on MissingPluginException {
       return Failure<T, AuthFailure>(AuthFailure.storageUnavailable);
     }
   }

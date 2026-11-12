@@ -28,6 +28,29 @@ abstract final class AppTheme {
     stops: [0, 0.67, 0.74],
   );
   static const onboardingContentPadding = EdgeInsets.fromLTRB(32, 24, 32, 28);
+  static const catalogContentPadding = EdgeInsets.all(16);
+  static const homeSectionSpacing = 24.0;
+  static const homeSectionTitleSpacing = 8.0;
+  static const catalogBackground = Color(0xFFEDF0F1);
+  static const productCardSurface = Colors.white;
+  static const productDescriptionAccent = Color(0xFF588321);
+  static const nearbyShopsExploreText = Color(0xFF006780);
+  static const nearbyShopsOrderText = Color(0xFFB42369);
+  static const homeHeaderBackground = Color(0xFFBCE1EF);
+  static const homeSkeletonBase = Color(0xFFCED9DD);
+  static const homeSkeletonHighlight = Color(0xFFF5FAFB);
+  static const orangeBadgeBackground = Color(0xfff57c24);
+  static const orangeBadgeForeground = Colors.white;
+  static const homeHeaderGutter = 24.0;
+  static const homeHeaderRadius = BorderRadius.vertical(
+    bottom: Radius.circular(24),
+  );
+  static const homeBannerRadius = BorderRadius.vertical(top: Radius.circular(16));
+  static const productCardRadius = BorderRadius.all(Radius.circular(16));
+  static const rewardsPointsText = Color(0xFFB42369);
+  static const rewardsSilver = Color(0xFF606A73);
+  static const rewardsGold = Color(0xFF846500);
+  static const rewardsPlatinum = Color(0xFF006780);
 
   static const _brandCyan = Color(0xFF58CEEB);
   static const _brandPink = Color(0xFFF1589F);
